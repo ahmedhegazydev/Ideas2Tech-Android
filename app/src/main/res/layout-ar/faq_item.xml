@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#DADA"
+    android:layout_margin="3dp"
+    android:padding="5dp"
+    >
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:id="@+id/rl"
+       >
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           android:paddingRight="14dp"
+           android:paddingBottom="10dp"
+           android:paddingTop="10dp"
+           android:text="Hi all"
+           android:layout_marginRight="39dp"
+           android:background="@android:color/darker_gray"
+           android:layout_centerVertical="true"
+           android:id="@+id/tvQuestion"
+           android:gravity="right"
+
+           />
+       <com.example.ahmed.convertwebsitetoapp.view.CircleImageView
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:src="@drawable/logolaunch"
+           android:id="@+id/ivLogo"
+           android:layout_centerVertical="true"
+           />
+   </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Hi all"
+        android:padding="10dp"
+        android:background="#ddd"
+        android:id="@+id/tvAnswer"
+        android:gravity="right"
+        />
+
+
+</LinearLayout>

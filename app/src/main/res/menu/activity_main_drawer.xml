@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_page"
+            android:title="@string/nav_home_page" />
+
+        <item
+            android:id="@+id/nav_our_projects"
+            android:title="@string/nav_our_projets" />
+        <item
+            android:id="@+id/nav_services"
+            android:title="@string/nav_services" />
+
+        <item
+            android:id="@+id/nav_order_now"
+            android:title="@string/nav_order_now" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:title="@string/nav_about_us" />
+        <item
+            android:id="@+id/nav_contact_us"
+            android:title="@string/nav_contact_us" />
+        <item
+            android:id="@+id/nav_faqs"
+            android:title="@string/nav_faqs"
+
+            />
+        <item
+            android:id="@+id/nav_sign_out"
+            android:title="@string/nav_sign_out"
+
+            />
+
+        <!--<item-->
+            <!--android:id="@+id/nav_notifications"-->
+            <!--android:icon="@drawable/ic_notifications_black_24dp"-->
+            <!--android:title="@string/nav_notifications" />-->
+
+        <!--<item-->
+            <!--android:id="@+id/nav_settings"-->
+            <!--android:icon="@drawable/ic_settings_black_24dp"-->
+            <!--android:title="@string/nav_settings" />-->
+    </group>
+
+    <!--<item android:title="Other">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_about_us"-->
+                <!--android:title="@string/nav_about_us" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_privacy_policy"-->
+                <!--android:title="@string/privacy_policy" />-->
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>

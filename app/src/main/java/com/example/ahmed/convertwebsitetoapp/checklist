@@ -1,0 +1,19 @@
+CheckList
+===========================
+1-Sub Menus
+2-Locaoization -> Suppory tow languages & two layouts(UI) for both langs (Arabic and English)
+3-login and registeration
+4-FAQs by connecting to Mohammed Abdullah Online Json
+5-Our Projects by connecting and fetching data from Mohammed Abdullah Online JSON
+6-About Fragment that has fetched data from JSON online
+7-Services Section has its own data that fetched from JSON
+8-The user can Register and login and can skip this step if it likes and Register in future
+9-Our app will list all available plans with a particular price and he can order it
+10-supporting gateway payment
+11-he can update the password
+12-Contact us with supporting our location on Googel Maps and sending custom email for user
+13-live Chatting every time and every where
+android-push-notifications-using-google-cloud-messaging-gcm
+========
+Note    | The app will bre a friend with another app for live chating rather than a website and receive notification if any user chat
+=========

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.payfort.start"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <application />
+    <!--<application-->
+    <!--tools:overrideLibrary="com.payfort.fort.android.sdk"-->
+
+    <!--/>-->
+
+</manifest>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/regDrawerLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue4"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="right"
+
+
+    >
+
+    <include
+        layout="@layout/activity_login2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layoutLogin"
+        />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/regNavView"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        android:fitsSystemWindows="true"
+        android:tag="navView"
+        app:headerLayout="@layout/layout_register"
+
+        />
+</android.support.v4.widget.DrawerLayout>

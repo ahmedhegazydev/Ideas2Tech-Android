@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <!--<com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner-->
+    <!--android:id="@+id/spinnerPlans"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:hint="Select Category"-->
+    <!--android:padding="10dp"-->
+    <!--android:textColorHint="#05ab9a"-->
+    <!--app:met_floatingLabel="normal"-->
+
+    <!--/>-->
+
+
+    <Spinner
+        android:id="@+id/spinnerPlans"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        />
+
+    <ListView
+        android:id="@+id/listViewPlans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/spinnerPlans"
+        android:background="@drawable/pic1"
+
+        />
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginBottom="5dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@color/gray1" />-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#FFFFFF"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="100">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="50"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="20dp"-->
+    <!--android:text="Item"-->
+    <!--android:textColor="@color/gray1"-->
+    <!--android:textSize="20sp"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="50"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="20dp"-->
+    <!--android:text="Price"-->
+    <!--android:textColor="@color/gray1"-->
+    <!--android:textSize="20sp"-->
+    <!--android:textStyle="bold"-->
+
+    <!--/>-->
+    <!--</LinearLayout>-->
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginBottom="5dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@color/gray1" />-->
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#FFFFFF"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="5dp"-->
+    <!--android:background="@color/colorBlue1"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="5dp">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="150dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--android:src="@drawable/service1"-->
+
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="Normal website"-->
+    <!--android:textStyle="bold"-->
+
+    <!--/>-->
+    <!--</LinearLayout>-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#FFFFFF">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tvSalary"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:gravity="center"-->
+    <!--android:text="4500 EGP" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btnOrderWeb"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/tvSalary"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:drawableRight="@drawable/add"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="I wnat this" />-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/colorBlue1"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="5dp">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="150dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--android:src="@drawable/service2"-->
+
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="Mobile App"-->
+    <!--android:textStyle="bold"-->
+
+    <!--/>-->
+    <!--</LinearLayout>-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#FFFFFF">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tvSalary2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:gravity="center"-->
+    <!--android:text="4500 EGP" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btnOrderApp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/tvSalary2"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:drawableRight="@drawable/add"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="I wnat this"-->
+
+    <!--/>-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</ScrollView>-->
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabChatting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/chatting" />
+
+</RelativeLayout>

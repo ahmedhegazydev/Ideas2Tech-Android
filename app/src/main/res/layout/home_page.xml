@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pic1"
+    android:gravity="center"
+    android:orientation="vertical"
+
+    >
+
+    <TextView
+        android:id="@+id/services"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="Services"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/projects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/services"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="Our projects"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ordernow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/projects"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="Order Now +"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/contactus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ordernow"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="Contact Us"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+
+        />
+
+    <TextView
+        android:id="@+id/faqs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contactus"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="FAQs"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+
+        />
+
+    <TextView
+        android:id="@+id/signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/faqs"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="5dp"
+        android:alpha=".8"
+        android:background="@color/gray2"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:text="SignOut"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+
+        />
+    <LinearLayout
+        android:id="@+id/rlFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:weightSum="100"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frame"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_weight="99"
+            >
+
+        </FrameLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frame"
+            android:background="@color/logo"
+            android:layout_alignParentBottom="true"
+            android:text="Back To Home Page"
+            android:textColor="#FFFFFF"
+            android:id="@+id/bacToHome"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="Services"-->
+    <!--android:textAllCaps="true"-->
+    <!--android:textSize="20sp"-->
+
+    <!--/>-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service1" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service2" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Find more"-->
+    <!--android:textColor="@color/errorRed" />-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="Our Projects"-->
+    <!--android:textAllCaps="true"-->
+    <!--android:textSize="20sp" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service1" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service2" />-->
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Find more"-->
+    <!--android:textColor="@color/errorRed" />-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+
+
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabChatting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/chatting" />
+</RelativeLayout>

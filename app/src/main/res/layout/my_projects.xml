@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:visibility="gone"
+
+        >
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+
+            />
+
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+        <ListView
+            android:id="@+id/lvServices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorBlue1"
+            android:dividerHeight="2dp"
+
+            ></ListView>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabChatting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:layout_marginRight="5dp"
+        app:srcCompat="@drawable/chatting" />
+    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="vertical"--><!--android:visibility="gone"--><!--&gt;-->
+
+    <!--<android.support.v7.widget.RecyclerView--><!--android:id="@+id/listView"--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight=".9" />-->
+
+    <!--<LinearLayout--><!--android:id="@+id/bar"--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight=".1"--><!--android:weightSum="3">-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CustomButton--><!--android:id="@+id/delete"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_marginRight="2dp"--><!--android:layout_weight="1"--><!--android:background="@color/darkYellow"--><!--android:drawableLeft="@drawable/delete_bitmap"--><!--android:gravity="center"--><!--android:paddingLeft="40dp"--><!--android:paddingRight="20dp"--><!--android:text="الغاء"--><!--android:textSize="@dimen/Small" />-->
+
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CustomButton--><!--android:id="@+id/edit"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_marginRight="2dp"--><!--android:layout_weight="1"--><!--android:background="@color/darkYellow"--><!--android:drawableLeft="@drawable/edit_bitmap"--><!--android:paddingLeft="20dp"--><!--android:paddingRight="20dp"--><!--android:text="تعديل"--><!--android:textSize="@dimen/Small" />-->
+
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CustomButton--><!--android:id="@+id/details"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:background="@color/darkYellow"--><!--android:drawableLeft="@drawable/error_black_bitmap"--><!--android:paddingLeft="10dp"--><!--android:paddingRight="20dp"--><!--android:text="تفاصيل"--><!--android:textSize="@dimen/Small" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<RelativeLayout--><!--android:id="@+id/background_add_projects"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:visibility="gone"--><!--&gt;-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CustomTextView--><!--android:id="@+id/txt"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_centerInParent="true"--><!--android:gravity="center"--><!--android:lineSpacingExtra="-15dp"--><!--android:text="قم بالضغط على زر الاضافه \n لاضافة مشروع جديد"--><!--android:textColor="@color/white"--><!--android:textSize="@dimen/Large" />-->
+
+    <!--<ImageView--><!--android:layout_width="150dp"--><!--android:layout_height="150dp"--><!--android:layout_above="@id/txt"--><!--android:layout_centerInParent="true"--><!--android:src="@drawable/add_project" />--><!--</RelativeLayout>-->
+
+</RelativeLayout>

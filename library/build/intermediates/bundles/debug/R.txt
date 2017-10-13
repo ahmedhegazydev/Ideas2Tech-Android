@@ -1,0 +1,3 @@
+int id webView 0x7f040000
+int layout web_dialog 0x7f020000
+int string web_view_validation_alert 0x7f030000
