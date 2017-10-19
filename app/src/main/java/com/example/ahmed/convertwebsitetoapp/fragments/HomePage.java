@@ -64,6 +64,8 @@ public class HomePage extends Fragment implements View.OnClickListener {
     Handler handler = null;
     Button btnBackToHome = null;
     LinearLayout linearLayout = null;
+    TextView tvPrevOrders = null, tvAboutUs;
+    UserSessionManager userSessionManager = null;
     private ArrayList<Fragment> listFragments = new ArrayList<Fragment>();
 
     public static void setAlphaAnimation(View v) {
@@ -145,9 +147,6 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
     }
 
-    TextView tvPrevOrders = null, tvAboutUs;
-
-
     private void init() {
         tvContactUs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.contactus);
         tvOurProjects = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.projects);
@@ -169,34 +168,48 @@ public class HomePage extends Fragment implements View.OnClickListener {
         tvAboutUs.setOnClickListener(this);
 
 
+
+        userSessionManager = new UserSessionManager(getActivity());
+
     }
 
     @Override
     public void onClick(View view) {
         if (view.equals(tvSignOut)) {
             signOut(getActivity());
+
         }
+
         if (view.equals(tvServices)) {
             goToFragment(new Services());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_SERVICES);
         }
+
+
         if (view.equals(tvOrderNow)) {
             goToFragment(new OrderNow());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
         }
 
         if (view.equals(tvOurProjects)) {
             goToFragment(new OurProjects());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
         }
         if (view.equals(tvFaqs)) {
             goToFragment(new FAQs());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_FAQS);
         }
         if (view.equals(tvContactUs)) {
             goToFragment(new ContactUs());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
         }
         if (view.equals(tvAboutUs)) {
             goToFragment(new AboutUs());
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
         }
         if (view.equals(tvPrevOrders)) {
             startActivity(new Intent(getActivity(), PrevOrdersActivity.class));
+            userSessionManager.postLastPressedFragment(MainActivity.TAG_PREV_ORDERS);
         }
 
         if (view.equals(btnBackToHome)) {
@@ -258,26 +271,26 @@ public class HomePage extends Fragment implements View.OnClickListener {
             titleOk = "اه عايز أخرج";
 
         }
-
-        new AlertDialog.Builder(context).setMessage(message)
-                .setTitle(title)
-                .setPositiveButton(titleOk, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Clear the session data
-                        // This will clear all session data and
-                        // redirect user to LoginActivity
-                        new UserSessionManager(getActivity()).logoutUser();
-
-                    }
-                })
-                .setNegativeButton(titleCancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .show();
+//
+//        new AlertDialog.Builder(context).setMessage(message)
+//                .setTitle(title)
+//                .setPositiveButton(titleOk, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // Clear the session data
+//                        // This will clear all session data and
+//                        // redirect user to LoginActivity
+//                        new UserSessionManager(getActivity()).logoutUser();
+//
+//                    }
+//                })
+//                .setNegativeButton(titleCancel, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                })
+//                .show();
 
 
     }

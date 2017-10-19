@@ -19,8 +19,11 @@ public class UserSessionManager {
     private static final String PREFER_NAME = "AndroidExamplePref";
     // All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
+    private static final String IS_SKIPPPED = "IS_SKIPPPED";
     //user id from login
     public static final String KEY_USER_ID = "KEY_USER_ID";
+    //the last fragment has been pressed
+    public static final String KEY_LAST_FGMT_PRESSED = "KEY_LAST_FGMT_PRESSED";
     // Shared Preferences reference
     SharedPreferences pref;
     // Editor reference for Shared preferences
@@ -37,6 +40,17 @@ public class UserSessionManager {
         editor = pref.edit();
     }
 
+    public void postLastPressedFragment(String lastPressedFmtName) {
+        editor.putString(KEY_LAST_FGMT_PRESSED, lastPressedFmtName);
+        editor.commit();
+        editor.apply();
+
+    }
+
+    public String getLastPressedFragment() {
+        return new String(pref.getString(KEY_LAST_FGMT_PRESSED, ""));
+    }
+
     //Create login session
     public void createUserLoginSession(String name, String email, String userId) {
         // Storing login value as TRUE
@@ -50,6 +64,7 @@ public class UserSessionManager {
         // commit changes
         editor.commit();
     }
+
 
     /**
      * Check login method will check user login status
@@ -100,6 +115,7 @@ public class UserSessionManager {
         return user;
     }
 
+
     /**
      * Clear session details
      */
@@ -126,5 +142,37 @@ public class UserSessionManager {
     // Check for login
     public boolean isUserLoggedIn() {
         return pref.getBoolean(IS_USER_LOGIN, false);
+    }
+
+    // Check for login
+    public boolean isSkipped() {
+        return pref.getBoolean(IS_SKIPPPED, false);
+    }
+
+    public void setAsSkipped() {
+        editor.putBoolean(IS_SKIPPPED, true);
+        // commit changes
+        editor.commit();
+    }
+
+    public boolean checkSkip() {
+        // Check skip
+        if (!this.isSkipped()) {
+
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, LoginActivity.class);
+
+            // Closing all the Activities from stack
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+
+            return true;
+        }
+        return false;
     }
 }

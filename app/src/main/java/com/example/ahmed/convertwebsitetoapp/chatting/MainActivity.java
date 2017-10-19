@@ -51,17 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
     // urls to load navigation header background image
     // and profile image
-    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    public static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+    public static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
     // tags used to attach the fragments
-    private static final String TAG_HOME_PAGE = "TAG_HOME_PAGE";
-    private static final String TAG_ABOUT_US = "TAG_ABOUT_US";
-    private static final String TAG_OUR_PROJECTS = "TAG_OUR_PROJECTS";
-    private static final String TAG_SERVICES = "TAG_SERVICES";
-    private static final String TAG_ORDER_NOW = "TAG_ORDER_NOW";
-    private static final String TAG_CONTACT_US = "TAG_CONTACT_US";
-    private static final String TAG_FAQS = "TAG_FAQS";
-    private static final String TAG_PREV_ORDERS = "TAG_PREV_ORDERS";
+    public static final String TAG_HOME_PAGE = "TAG_HOME_PAGE";
+    public static final String TAG_ABOUT_US = "TAG_ABOUT_US";
+    public static final String TAG_OUR_PROJECTS = "TAG_OUR_PROJECTS";
+    public static final String TAG_SERVICES = "TAG_SERVICES";
+    public static final String TAG_ORDER_NOW = "TAG_ORDER_NOW";
+    public static final String TAG_CONTACT_US = "TAG_CONTACT_US";
+    public static final String TAG_FAQS = "TAG_FAQS";
+    public static final String TAG_PREV_ORDERS = "TAG_PREV_ORDERS";
     // index to identify current nav menu item
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_HOME_PAGE;
@@ -70,18 +70,18 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor = null;
     int i = 0;
-    private NavigationView navigationView;
-    private DrawerLayout drawer;
-    private View navHeader;
-    private ImageView imgNavHeaderBg, imgProfile;
-    private TextView txtName, txtWebsite;
-    private Toolbar toolbar;
-    private FloatingActionButton fabChatting;
+    public NavigationView navigationView;
+    public DrawerLayout drawer;
+    public View navHeader;
+    public ImageView imgNavHeaderBg, imgProfile;
+    public TextView txtName, txtWebsite;
+    public Toolbar toolbar;
+    public FloatingActionButton fabChatting;
     // toolbar titles respected to selected nav menu item
-    private String[] activityTitles;
+    public String[] activityTitles;
     // flag to load home fragment when user presses back key
-    private boolean shouldLoadHomeFragOnBackPress = true;
-    private Handler mHandler;
+    public boolean shouldLoadHomeFragOnBackPress = true;
+    public Handler mHandler;
 
     public static void setAlphaAnimation(View v) {
         ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
@@ -126,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
         // Check user login (this is the important point)
         // If User is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
-        if (session.checkLogin())
-            finish();
+
+
+//        if (session.checkLogin())
+//            finish();
 
 
         mHandler = new Handler();
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startChatting() {
+    public void startChatting() {
         SendBird.connect("1", new SendBird.ConnectHandler() {
             @Override
             public void onConnected(com.sendbird.android.User user, SendBirdException e) {
@@ -223,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void enteringTheChannel() {
+    public void enteringTheChannel() {
         OpenChannel.getChannel("Ideas2Tech", new OpenChannel.OpenChannelGetHandler() {
             @Override
             public void onResult(OpenChannel openChannel, SendBirdException e) {
@@ -250,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
      * like background image, profile image
      * name, website, notifications action view (dot)
      */
-    private void loadNavHeader() {
+    public void loadNavHeader() {
         // name, website
 //        txtName.setText("Ravi Tamada");
 //        txtWebsite.setText("www.androidhive.info");
@@ -277,7 +279,50 @@ public class MainActivity extends AppCompatActivity {
      * Returns respected fragment that user
      * selected from navigation menu
      */
-    private void loadHomeFragment() {
+    public void loadHomeFragment() {
+
+
+
+        switch (session.getLastPressedFragment()) {
+            case TAG_OUR_PROJECTS:
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_OUR_PROJECTS;
+                goToFragment(new OurProjects());
+
+                break;
+            case TAG_ABOUT_US:
+                navItemIndex = 5;
+                CURRENT_TAG = TAG_ABOUT_US;
+                goToFragment(new AboutUs());
+                break;
+            case TAG_CONTACT_US:
+                navItemIndex = 6;
+                CURRENT_TAG = TAG_CONTACT_US;
+                goToFragment(new ContactUs());
+                break;
+            case TAG_FAQS:
+                goToFragment(new FAQs());
+                break;
+            case TAG_ORDER_NOW:
+                navItemIndex = 4;
+                CURRENT_TAG = TAG_ORDER_NOW;
+                goToFragment(new OrderNow());
+                break;
+            case TAG_PREV_ORDERS:
+
+                break;
+            case TAG_SERVICES:
+                navItemIndex = 2;
+                CURRENT_TAG = TAG_SERVICES;
+                goToFragment(new Services());
+                break;
+
+            default:
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_HOME_PAGE;
+                goToFragment(new HomePage());
+                break;
+        }
         // selecting appropriate nav menu item
         selectNavMenu();
 
@@ -293,28 +338,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
-        // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
-
         // show or hide the fab button
         toggleFab();
 
@@ -325,7 +348,38 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-    private Fragment getHomeFragment() {
+
+    public void goToFragment(final Fragment fmt) {
+
+
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        // This effect can be seen in GMail app
+
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // update the main content by replacing fragments
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fmt, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+
+        // If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+
+    }
+
+    public Fragment getHomeFragment() {
         Fragment fragment = null;
         switch (navItemIndex) {
             case 0:
@@ -390,15 +444,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setToolbarTitle() {
+    public void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
-    private void selectNavMenu() {
+    public void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
-    private void setUpNavigationView() {
+    public void setUpNavigationView() {
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -586,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // show or hide the fab
-    private void toggleFab() {
+    public void toggleFab() {
         if (navItemIndex == 0)
             fabChatting.show();
         else

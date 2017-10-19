@@ -231,6 +231,18 @@ public class LoginActivity extends AppCompatActivity {
 //                "Haram",
 //                "123"
 //        );
+
+
+        if (session.isSkipped()){
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+
+        }else{
+
+        }
+
+
+
     }
 
     @Override
@@ -347,8 +359,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                editor.commit();
 //                                editor.apply();
 
-                                session.createUserLoginSession(userFullName,
-                                        etEmail.getText().toString(), userId);
+                                //session.createUserLoginSession(userFullName, etEmail.getText().toString(), userId);
                                 // Starting MainActivity
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -748,6 +759,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
     public void register(String url) {
         // Showing progress dialog at user registration time.
         pdRegister = new ProgressDialog(this);
@@ -980,8 +992,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void skip(View view) {
+
+
+
+        session.setAsSkipped();
         finish();
         startActivity(new Intent(this, MainActivity.class));
+
+
     }
 
     private void clearInputs() {
