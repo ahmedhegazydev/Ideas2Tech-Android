@@ -101,6 +101,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
 //        services.setAdapter(new ImagesAdapter(uriList, titlesList));
 
         init();
+        fetchData(URLs.URL_SERVICES);
 
         return viewRoot;
     }
@@ -116,7 +117,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
         progressDialog.setMessage("Preparing");
         progressDialog.show();
 
-        fetchData(URLs.URL_SERVICES);
+
     }
 
     private void fetchData(String url) {

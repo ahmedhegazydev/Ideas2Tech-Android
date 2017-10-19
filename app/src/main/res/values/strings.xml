@@ -17,12 +17,10 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- Navigation Drawer menu labels -->
-    <string name="nav_sayhi">Home</string>
-    <string name="nav_contacts">Photos</string>
-    <string name="nav_videos">Movies</string>
     <string name="nav_contact_us">Contact Us</string>
     <string name="nav_order_now">Order Now</string>
     <string name="nav_services">Services</string>
+    <string name="nav_prev_services">Prev Orders</string>
     <string name="nav_our_projets">Our Projects</string>
     <string name="nav_about_us">About Us</string>
     <string name="nav_home_page">Home Page</string>
@@ -37,6 +35,7 @@
         <item>Home Page</item>
         <item>Our Projects</item>
         <item>Services</item>
+        <item></item>
         <item>Order Now</item>
         <item>About Us</item>
         <item>Contact Us</item>

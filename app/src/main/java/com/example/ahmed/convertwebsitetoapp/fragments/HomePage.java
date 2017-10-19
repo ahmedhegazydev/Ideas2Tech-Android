@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 //import com.example.ahmed.convertwebsitetoapp.ActivityMain;
+import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.adapters.ViewPagerAdapter;
 import com.example.ahmed.convertwebsitetoapp.chatting.MainActivity;
@@ -143,13 +145,19 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
     }
 
+    TextView tvPrevOrders = null, tvAboutUs;
+
+
     private void init() {
-        tvContactUs = (TextView) viewRoot.findViewById(R.id.contactus);
-        tvOurProjects = (TextView) viewRoot.findViewById(R.id.projects);
-        tvServices = (TextView) viewRoot.findViewById(R.id.services);
-        tvSignOut = (TextView) viewRoot.findViewById(R.id.signout);
-        tvFaqs = (TextView) viewRoot.findViewById(R.id.faqs);
-        tvOrderNow = (TextView) viewRoot.findViewById(R.id.ordernow);
+        tvContactUs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.contactus);
+        tvOurProjects = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.projects);
+        tvServices = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.services);
+        tvSignOut = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.signout);
+        tvFaqs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.faqs);
+        tvOrderNow = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.ordernow);
+        tvPrevOrders = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.prevOrders);
+        tvAboutUs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.aboutUs);
+
 
         tvContactUs.setOnClickListener(this);
         tvOurProjects.setOnClickListener(this);
@@ -157,6 +165,8 @@ public class HomePage extends Fragment implements View.OnClickListener {
         tvOrderNow.setOnClickListener(this);
         tvSignOut.setOnClickListener(this);
         tvFaqs.setOnClickListener(this);
+        tvPrevOrders.setOnClickListener(this);
+        tvAboutUs.setOnClickListener(this);
 
 
     }
@@ -181,6 +191,12 @@ public class HomePage extends Fragment implements View.OnClickListener {
         }
         if (view.equals(tvContactUs)) {
             goToFragment(new ContactUs());
+        }
+        if (view.equals(tvAboutUs)) {
+            goToFragment(new AboutUs());
+        }
+        if (view.equals(tvPrevOrders)) {
+            startActivity(new Intent(getActivity(), PrevOrdersActivity.class));
         }
 
         if (view.equals(btnBackToHome)) {
@@ -230,12 +246,12 @@ public class HomePage extends Fragment implements View.OnClickListener {
     public void signOut(Context context) {
         String message = "", titleOk = "", titleCancel = "";
         String title = "";
-        if (Locale.getDefault().getLanguage().toString().equalsIgnoreCase("en")){
+        if (Locale.getDefault().getLanguage().toString().equalsIgnoreCase("en")) {
             message = "Do u want to exit ?";
             titleOk = "Exit";
             titleCancel = "Cancel";
             title = "Our dear customer";
-        }else{
+        } else {
             message = "هل تريد الخروج بالفعل؟";
             title = "عميلنا العزيز";
             titleCancel = "لا سيبني شويه";

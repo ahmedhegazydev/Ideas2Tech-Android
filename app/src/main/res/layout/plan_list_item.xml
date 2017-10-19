@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:layout_margin="10dp"
+    android:gravity="center"
     android:padding="10dp"
-
 
 
     >
@@ -18,19 +17,42 @@
         android:orientation="vertical"
         android:weightSum="100">
 
-        <TextView
-
-            android:id="@+id/tvPlanTitle"
+        <RelativeLayout
+            android:id="@+id/rlCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:background="@color/logo"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Web Design"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+
+            >
+
+            <TextView
+                android:id="@+id/tvPlanTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Web Design"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbPlanItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"
+                android:checked="false"
+                android:theme="@style/MyCheckBox"
+
+
+                />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/llDescAndPrice"
@@ -75,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:background="@color/logo"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableRight="@drawable/add"
             android:gravity="center"
             android:padding="10dp"

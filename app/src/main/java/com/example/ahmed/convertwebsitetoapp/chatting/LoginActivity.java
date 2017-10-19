@@ -109,6 +109,25 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog pdSendingEmail, pdCheckingEmailExist = null;
     String emailForgetPass = "";
     ProgressDialog progressDialog = null;
+    TextWatcher txtWatcherEmail = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (!TextUtils.isEmpty(editable.toString()) && isValidEmail(editable.toString())) {
+                etEmail.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ok), null);
+                ///Toast.makeText(LoginActivity.this, "ok", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
@@ -213,26 +232,6 @@ public class LoginActivity extends AppCompatActivity {
 //                "123"
 //        );
     }
-
-    TextWatcher txtWatcherEmail = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            if (!TextUtils.isEmpty(editable.toString()) && isValidEmail(editable.toString())) {
-                etEmail.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ok), null);
-                ///Toast.makeText(LoginActivity.this, "ok", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -582,7 +581,7 @@ public class LoginActivity extends AppCompatActivity {
                                     message = jsonObject.getString("data");
                                     from = "engahmedali2022@gmail.com";
                                     to = emailForgetPass;
-                                    new RetreiveFeedTask2(getApplicationContext()).execute();
+                                    new RetreiveFeedTask2(LoginActivity.this).execute();
                                 }
                             }
                         } catch (JSONException e) {
@@ -713,11 +712,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         // Showing progress dialog at user registration time.
-        pdRegister = new ProgressDialog(this);
-        pdRegister.setMessage("Please Wait, We are Inserting Your Data on Server");
-        pdRegister.setCanceledOnTouchOutside(false);
-        pdRegister.setCancelable(false);
-        pdRegister.show();
+//        pdRegister = new ProgressDialog(this);
+//        pdRegister.setMessage("Please Wait, We are Inserting Your Data on Server");
+//        pdRegister.setCanceledOnTouchOutside(false);
+//        pdRegister.setCancelable(false);
+//        pdRegister.show();
 
 
         register(URLs.URL_REGISTER_FINAL);
@@ -751,11 +750,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void register(String url) {
         // Showing progress dialog at user registration time.
-//        pdRegister = new ProgressDialog(this);
-//        pdRegister.setMessage("Please Wait, We are Inserting Your Data on Server");
-//        pdRegister.setCanceledOnTouchOutside(false);
-//        pdRegister.setCancelable(false);
-//        pdRegister.show();
+        pdRegister = new ProgressDialog(this);
+        pdRegister.setMessage("Please Wait, We are Inserting Your Data on Server");
+        pdRegister.setCanceledOnTouchOutside(false);
+        pdRegister.setCancelable(false);
+        pdRegister.show();
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 url, new Response.Listener<String>() {
             @Override
@@ -771,11 +770,14 @@ public class LoginActivity extends AppCompatActivity {
                         to = etNewUserEmail.getText().toString();
                         from = "engahmedali2022@gmail.com";
                         message = jObj.getString("data");
-//                        progressDialog = new ProgressDialog(LoginActivity.this.getApplicationContext());
-//                        progressDialog.setMessage("Sending email confirmation....");
-//                        progressDialog.setTitle("Please wait");
-//                        progressDialog.show();
+
+                        progressDialog = new ProgressDialog(LoginActivity.this);
+                        progressDialog.setMessage("Sending email confirmation....");
+                        progressDialog.setTitle("Please wait");
+                        progressDialog.show();
+
                         new RetreiveFeedTask2(getApplicationContext()).execute();
+
                         clearInputs();
                     } else {
                         //Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_SHORT).show();
@@ -1041,7 +1043,6 @@ public class LoginActivity extends AppCompatActivity {
 
     class RetreiveFeedTask2 extends AsyncTask<String, Void, String> {
 
-
         Context context = null;
 
         public RetreiveFeedTask2(Context context) {
@@ -1062,8 +1063,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (pdSendingEmail.isShowing()) {
-                pdSendingEmail.dismiss();
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
             //Toast.makeText(LoginActivity.this.getApplicationContext(), from + "\n" + to, Toast.LENGTH_SHORT).show();
             Toast.makeText(context, "Email sent, please update your password", Toast.LENGTH_SHORT).show();

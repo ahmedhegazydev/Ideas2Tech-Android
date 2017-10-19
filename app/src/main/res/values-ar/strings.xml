@@ -6,6 +6,7 @@
     <string name="nav_order_now">عايز مشروع</string>
     <string name="nav_our_projets">مشاريعنا</string>
     <string name="nav_services">خدمات</string>
+    <string name="nav_prev_services">خدماتي</string>
     <string name="nav_faqs">أساله وأجوبه</string>
     <string name="nav_sign_out">خروج</string>
     <string name="login">Login</string>
@@ -17,6 +18,8 @@
         <item>عن الشركه</item>
         <item>مشاريعنا</item>
         <item>خدمات</item>
+
+
         <item>عايز مشروع</item>
         <item>تواصل معنا</item>
         <item>أساله وأجوبه</item>
@@ -35,7 +38,14 @@
     </string-array>
 
 
+    <string name="CHATTING_CLIENT_ID">mobile_sdk_client_651b0d149b179b0694c5</string>
+    <string name="CHATTING_APP_ID">277bf757e6b8dcc213d3633ff7f72a611ebfeab3a8b3095f</string>
+    <string name="APP_ID">85CF9FF2-FA37-46DE-9A9F-7795232216DF</string>
+    <string name="app_name">Ideas2Tech</string>
 
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
 
 </resources>

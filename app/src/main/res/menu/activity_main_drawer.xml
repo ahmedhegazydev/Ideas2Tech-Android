@@ -12,7 +12,9 @@
         <item
             android:id="@+id/nav_services"
             android:title="@string/nav_services" />
-
+        <item
+            android:id="@+id/nav_prev_services"
+            android:title="@string/nav_prev_services" />
         <item
             android:id="@+id/nav_order_now"
             android:title="@string/nav_order_now" />

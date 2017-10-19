@@ -67,29 +67,43 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    compile files('libs/activation.jar')
-//    compile files('libs/additionnal.jar')
-//    compile files('libs/mail.jar')
-//    compile files('libs/PayU-release.jar')
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
+    compile files('libs/mail.jar')
+    compile files('libs/PayU-release.jar')
+    compile group: 'com.zopim.android', name: 'sdk', version: '1.3.5.1'
+    compile group: 'com.zendesk', name: 'sdk', version: '1.11.0.1'
+    compile('com.nispok:snackbar:2.11.+') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
+    compile files('libs/mail.jar')
+    compile files('libs/PayU-release.jar')
+    compile group: 'com.zopim.android', name: 'sdk', version: '1.3.5.1'
+    compile group: 'com.zendesk', name: 'sdk', version: '1.11.0.1'
+    compile('com.nispok:snackbar:2.11.+') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+//    compile project(':FORTSDKv1.4.1')
+//    compile 'com.android.support:multidex:1.0.1'
 //    compile 'com.android.support:design:25.0.1'
 //    compile 'com.android.support:support-v4:25.3.1'
 //    compile 'com.squareup.picasso:picasso:2.3.2'
-//    compile 'com.google.code.gson:gson:2.6.2'
+//    compile 'com.google.code.gson:gson:2.7'
 //    compile 'com.nineoldandroids:library:2.4.0'
-//    compile 'com.android.support:multidex:1.0.1'
 //    compile 'com.android.support:recyclerview-v7:25.3.1'
 //    compile 'com.android.support:appcompat-v7:23.2.1'
 //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-//    compile 'com.jakewharton:butterknife:8.5.1'
 //    compile 'com.mikhaellopez:circularimageview:3.0.2'
 //    compile 'de.hdodenhof:circleimageview:1.3.0'
 //    compile 'com.github.bumptech.glide:glide:3.7.0'
 //    compile 'com.daimajia.slider:library:1.1.5@aar'
 //    compile 'com.github.mancj:SlideUp-Android:1.0-beta'
 //    compile 'javax.inject:javax.inject:1'
-//    testCompile 'junit:junit:4.12'
 //    compile 'com.android.volley:volley:1.0.0'
-//    compile 'com.android.support:multidex:1.0.1'
 //    compile 'com.google.android.gms:play-services-auth:11.0.4'
 //    compile 'com.google.firebase:firebase-analytics:11.0.4'
 //    compile 'com.google.firebase:firebase-database:11.0.4'
@@ -106,26 +120,36 @@ dependencies {
 //    compile 'com.google.android.gms:play-services-tasks:11.0.4'
 //    compile 'com.google.firebase:firebase-appindexing:11.0.4'
 //    compile 'com.firebaseui:firebase-ui-database:1.2.0'
+//    compile 'org.jsoup:jsoup:1.10.3'
+//    compile 'com.google.android.gms:play-services-wallet:11.0.4'
+//    compile 'com.jakewharton:butterknife:8.6.0'
+//    compile 'com.sendbird.sdk:sendbird-android-sdk:3.0.38'
+//    compile 'com.victor:lib:1.0.1'
+//    compile 'com.shamanland:fonticon:0.1.8'
+//    compile 'com.google.guava:guava:20.0'
+//    compile 'org.bouncycastle:bcprov-jdk16:1.46'
+//    compile 'commons-codec:commons-codec:1.10'
+//    compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
+//    testCompile 'junit:junit:4.12'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+//    compile('com.paypal.sdk:paypal-android-sdk:2.15.3')
 
     compile files('libs/activation.jar')
     compile files('libs/additionnal.jar')
     compile files('libs/mail.jar')
     compile files('libs/PayU-release.jar')
-
-
-
     compile group: 'com.zopim.android', name: 'sdk', version: '1.3.5.1'
     compile group: 'com.zendesk', name: 'sdk', version: '1.11.0.1'
-
-    //compile 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:1.0b7@aar'
-    //compile 'com.stripe:stripe-android:5.1.0'
-
-
+    compile('com.nispok:snackbar:2.11.+') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+//    compile project(':FORTSDKv1.4.1')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
@@ -157,24 +181,19 @@ dependencies {
     compile 'com.google.android.gms:play-services-wallet:11.0.4'
     compile 'com.jakewharton:butterknife:8.6.0'
     compile 'com.sendbird.sdk:sendbird-android-sdk:3.0.38'
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.victor:lib:1.0.1'
-    compile 'com.google.code.gson:gson:2.7'
     compile 'com.shamanland:fonticon:0.1.8'
-    compile('com.nispok:snackbar:2.11.+') {
-        // exclusion is not necessary, but generally a good idea.
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
     compile 'com.google.guava:guava:20.0'
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
     compile 'commons-codec:commons-codec:1.10'
-    compile project(':FORTSDKv1.4.1')
-
-    //compile 'com.jaredrummler:material-spinner:1.2.1'
     compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
-
+    compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 }
+
+
+
 
 
 apply plugin: 'com.google.gms.google-services'

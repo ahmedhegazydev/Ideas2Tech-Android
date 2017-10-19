@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\ConvertWebSiteToApp\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "F:\\Ideas2Tech\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 147
                 },
                 "from": {
-                    "file": "F:\\ConvertWebSiteToApp\\library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "F:\\Ideas2Tech\\library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

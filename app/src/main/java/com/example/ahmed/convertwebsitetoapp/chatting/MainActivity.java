@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.fragments.AboutUs;
 import com.example.ahmed.convertwebsitetoapp.fragments.ContactUs;
@@ -36,7 +37,6 @@ import com.example.ahmed.convertwebsitetoapp.fragments.HomePage;
 import com.example.ahmed.convertwebsitetoapp.fragments.OrderNow;
 import com.example.ahmed.convertwebsitetoapp.fragments.OurProjects;
 import com.example.ahmed.convertwebsitetoapp.fragments.Services;
-import com.example.ahmed.convertwebsitetoapp.sessions.SessionManager;
 import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import com.sendbird.android.OpenChannel;
 import com.sendbird.android.SendBird;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_ORDER_NOW = "TAG_ORDER_NOW";
     private static final String TAG_CONTACT_US = "TAG_CONTACT_US";
     private static final String TAG_FAQS = "TAG_FAQS";
+    private static final String TAG_PREV_ORDERS = "TAG_PREV_ORDERS";
     // index to identify current nav menu item
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_HOME_PAGE;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     UserSessionManager session;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor = null;
+    int i = 0;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mAnimationSet.start();
+
+
     }
 
     public static Intent getOpenFacebookIntent(Context context) {
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         fabChatting = (FloatingActionButton) findViewById(R.id.fabChatting);
-       // setAlphaAnimation(fabChatting);
+        // setAlphaAnimation(fabChatting);
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -330,17 +334,16 @@ public class MainActivity extends AppCompatActivity {
                 return new OurProjects();
             case 2:
                 return new Services();
-            case 3:
-                return new OrderNow();
             case 4:
-                return new AboutUs();
+                return new OrderNow();
             case 5:
-                return new ContactUs();
+                return new AboutUs();
             case 6:
+                return new ContactUs();
+            case 7:
                 return new FAQs();
-            case 7: {
+            case 8:
                 signOut(MainActivity.this);
-            }
             default:
                 return new HomePage();
 
@@ -351,12 +354,12 @@ public class MainActivity extends AppCompatActivity {
 
         String message = "", titleOk = "", titleCancel = "";
         String title = "";
-        if (Locale.getDefault().getLanguage().toString().equalsIgnoreCase("en")){
+        if (Locale.getDefault().getLanguage().toString().equalsIgnoreCase("en")) {
             message = "Do u want to exit ?";
             titleOk = "Exit";
             titleCancel = "Cancel";
             title = "Our dear customer";
-        }else{
+        } else {
             message = "هل تريد الخروج بالفعل؟";
             title = "عميلنا العزيز";
             titleCancel = "لا سيبني شويه";
@@ -410,10 +413,6 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME_PAGE;
                         break;
-                    case R.id.nav_about_us:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_ABOUT_US;
-                        break;
                     case R.id.nav_our_projects:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_OUR_PROJECTS;
@@ -422,16 +421,25 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_SERVICES;
                         break;
-                    case R.id.nav_order_now:
+                    case R.id.nav_prev_services:
                         navItemIndex = 3;
+                        CURRENT_TAG = TAG_PREV_ORDERS;
+                        startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
+                        break;
+                    case R.id.nav_order_now:
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_ORDER_NOW;
                         break;
-                    case R.id.nav_contact_us:
+                    case R.id.nav_about_us:
                         navItemIndex = 5;
+                        CURRENT_TAG = TAG_ABOUT_US;
+                        break;
+                    case R.id.nav_contact_us:
+                        navItemIndex = 6;
                         CURRENT_TAG = TAG_CONTACT_US;
                         break;
                     case R.id.nav_faqs:
-                        navItemIndex = 6;
+                        navItemIndex = 7;
                         CURRENT_TAG = TAG_FAQS;
                         break;
                     case R.id.nav_sign_out:

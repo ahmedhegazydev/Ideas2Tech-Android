@@ -27,9 +27,7 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-
-        >
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
 
             <!-- <intent-filter> -->
@@ -89,8 +87,11 @@
         <activity android:name=".social.ActivityFacebook" />
         <activity android:name=".social.ActivityInstagram" />
         <activity android:name=".social.ActivityTwitter" />
-        <activity android:name=".social.ActivityYoutube"></activity>
+        <activity android:name=".social.ActivityYoutube" />
         <activity android:name=".activities.PayFortFactory" />
+        <activity android:name=".OrderMoreActvity" />
+        <activity android:name=".PrevOrdersActivity" />
+        <activity android:name=".AddNewOrderActivity"></activity>
     </application>
 
 </manifest>

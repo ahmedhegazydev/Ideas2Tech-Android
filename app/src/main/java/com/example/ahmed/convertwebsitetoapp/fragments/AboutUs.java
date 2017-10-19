@@ -10,8 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -150,6 +153,8 @@ public class AboutUs extends Fragment {
                             Log.e("aboutUs12812", jsonObject.toString());
                             JSONObject jsonObject1 = jsonObject.getJSONObject("data");
                             String data = jsonObject1.getString("abdescen");
+                            //Log.e("data", data);
+                            //data = TextUtils.htmlEncode(data);
 
                             //StringBuilder out = new StringBuilder();
                             //withinStyle(out, data, 0, data.length());
@@ -164,7 +169,12 @@ public class AboutUs extends Fragment {
                             webView.getSettings().setJavaScriptEnabled(true);
                             //webView.loadDataWithBaseURL("", data, "text/html", "UTF-8", "");
                             //webView.loadData(data, "text/html; charset=UTF-8", null);
-                            webView.loadDataWithBaseURL("", data, "text/html", "UTF-8", "");
+                            //webView.loadData("<html><body>"+data+"</body></html>", "text/html; charset=utf-8", "UTF-8");
+                            //webView.loadDataWithBaseURL("", data, "text/html", "UTF-8", "");
+
+
+                            webView.loadData(URLEncoder.encode(data).replaceAll("\\+", " "), "text/html", Xml.Encoding.UTF_8.toString());
+
                             pdLoading.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();

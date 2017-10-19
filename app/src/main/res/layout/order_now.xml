@@ -18,21 +18,70 @@
     <!--/>-->
 
 
-    <Spinner
-        android:id="@+id/spinnerPlans"
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        />
+        <Spinner
+            android:id="@+id/spinnerPlans"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ivAddNewOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add2" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listViewPlans"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/spinnerPlans"
+        android:layout_below="@id/ll"
         android:background="@drawable/pic1"
 
         />
+
+
+    <RelativeLayout
+        android:id="@+id/rlDataNotExist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/ll"
+        android:background="@android:color/darker_gray">
+
+        <TextView
+            android:id="@+id/tvDataNotExist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableRight="@drawable/warning"
+            android:gravity="center"
+            android:padding="30dp"
+            android:text="Data not exist\nNow the plans is empty"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:visibility="visible"
+
+
+            />
+
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDataNotExist"
+            android:layout_centerInParent="true"
+            android:text="Retry"
+            android:textColor="#FFFFFF"
+
+            />
+    </RelativeLayout>
 
     <!--<View-->
     <!--android:layout_width="match_parent"-->

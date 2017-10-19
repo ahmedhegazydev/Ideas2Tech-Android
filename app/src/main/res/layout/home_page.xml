@@ -9,151 +9,216 @@
 
     >
 
-    <TextView
-        android:id="@+id/services"
+    <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
+        android:layout_height="wrap_content">
 
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="Services"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/llHomePage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/projects"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/services"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="Our projects"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="Services"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/ordernow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/projects"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="Order Now +"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
+            <TextView
+                android:id="@+id/projects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/services"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="Our projects"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        />
+            <TextView
+                android:id="@+id/ordernow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/projects"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="Order Now +"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
 
-    <TextView
-        android:id="@+id/contactus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ordernow"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="Contact Us"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
+                />
 
+            <TextView
+                android:id="@+id/prevOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ordernow"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="My Prev Orders"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
 
-        />
+                />
 
-    <TextView
-        android:id="@+id/faqs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/contactus"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="FAQs"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-
-
-        />
-
-    <TextView
-        android:id="@+id/signout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/faqs"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="5dp"
-        android:alpha=".8"
-        android:background="@color/gray2"
-        android:paddingBottom="20dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:text="SignOut"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
+            <TextView
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/prevOrders"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="About Us"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
 
 
-        />
+                />
+
+            <TextView
+                android:id="@+id/contactus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/aboutUs"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="Contact Us"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <TextView
+                android:id="@+id/faqs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contactus"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="FAQs"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <TextView
+                android:id="@+id/signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/faqs"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableRight="@drawable/gooh"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="SignOut"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
     <LinearLayout
         android:id="@+id/rlFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:orientation="vertical"
-        android:weightSum="100"
-        >
+        android:visibility="gone"
+        android:weightSum="100">
+
         <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/frame"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_weight="99"
-            >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </FrameLayout>
+
         <Button
+            android:id="@+id/bacToHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/frame"
-            android:background="@color/logo"
             android:layout_alignParentBottom="true"
-            android:text="Back To Home Page"
-            android:textColor="#FFFFFF"
-            android:id="@+id/bacToHome"
+            android:layout_below="@id/frame"
             android:layout_weight="1"
-            />
+            android:background="@color/logo"
+            android:text="Back To Home Page"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
-
 
 
     <!--<ScrollView-->

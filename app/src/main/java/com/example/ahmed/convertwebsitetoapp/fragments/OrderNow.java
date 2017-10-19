@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CheckableImageButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,9 +30,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +47,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ahmed.convertwebsitetoapp.AddNewOrderActivity;
+import com.example.ahmed.convertwebsitetoapp.OrderMoreActvity;
+import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
-import com.example.ahmed.convertwebsitetoapp.activities.PayFortFactory;
+//import com.example.ahmed.convertwebsitetoapp.activities.PayFortFactory;
 import com.example.ahmed.convertwebsitetoapp.chatting.LoginActivity;
 import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
 import com.example.ahmed.convertwebsitetoapp.model.Drawer;
@@ -51,10 +60,6 @@ import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wallet.Wallet;
-import com.payfort.fort.android.sdk.base.FortSdk;
-import com.payfort.fort.android.sdk.base.callbacks.FortCallBackManager;
-import com.payfort.fort.android.sdk.base.callbacks.FortCallback;
-import com.payfort.sdk.android.dependancies.models.FortRequest;
 import com.payu.india.CallBackHandler.OnetapCallback;
 import com.payu.india.Extras.PayUChecksum;
 import com.payu.india.Interfaces.OneClickPaymentListener;
@@ -72,6 +77,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -98,7 +104,7 @@ import butterknife.Unbinder;
  * <p>
  * Implement this activity with OneClickPaymentListener only if you are integrating One Tap payments.
  */
-public class OrderNow extends Fragment implements OneClickPaymentListener {
+public class OrderNow extends Fragment implements OneClickPaymentListener, ImageView.OnClickListener {
 
     View viewRoot = null;
     Context context = null;
@@ -111,13 +117,25 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
         @Override
         public void onClick(View v) {
 
-
         }
 
 
     };
     FloatingActionButton fabChatting = null;
     ProgressDialog pdLoading = null;
+    Spinner spinnerPlans = null;
+    ArrayList<PlanItem> planItems = new ArrayList<PlanItem>();
+    ArrayList<String> SPINNERLIST = new ArrayList<String>();
+    boolean filter = false;
+    boolean flag = true;
+    Menu menu = null;
+    boolean thereIsSelected = true;
+    ListView listViewPlans = null;
+    ListViewAdapter listAdapter = null;
+    String cat = "";
+    ArrayList<PlanItem> selectedPlanItem = new ArrayList<PlanItem>();
+    TextView tvDataNotExist = null;
+    ImageView ivAddNewOrder = null;
     //////////////////////////
     private String merchantKey, userCredentials;
     // These will hold all the payment parameters
@@ -147,27 +165,27 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
         mAnimationSet.start();
     }
 
+    RelativeLayout rlDataNotExist = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.order_now, container, false);
+
+
         init();
         fetchingData(URLs.URL_ORDER_NOW);
+
+
         ///preparePayment();
         return viewRoot;
     }
-
-    Spinner spinnerPlans = null;
-    ArrayList<PlanItem> planItems = new ArrayList<PlanItem>();
-    ArrayList<String> SPINNERLIST = new ArrayList<String>();
-    boolean filter = false;
-    boolean flag = true;
 
     private void fetchingData(String url) {
 
 
         pdLoading = new ProgressDialog(getActivity());
-        //pdLoading.setMessage("Preparing...");
-        //pdLoading.setTitle("Please wait");
+        pdLoading.setMessage("Preparing...");
+        pdLoading.setTitle("Please wait");
         pdLoading.show();
 
         // Instantiate the RequestQueue.
@@ -183,47 +201,64 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
                             //JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
                             JSONObject jsonObject = new JSONObject(response.toString());
                             Log.e("plans2391", jsonObject.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            String price = null, titleEn = null, titleAr = null, descAr = null, descEn = null, catAr = null, catEn = null;
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String message = "";
+                            message = jsonObject.getString("message");
 
-                                titleAr = jsonObject1.getString("pltitlear");
-                                titleEn = jsonObject1.getString("pltitleen");
-                                descAr = jsonObject1.getString("pldescar");
-                                descEn = jsonObject1.getString("pldescen");
-                                catAr = jsonObject1.getString("categoryar");
-                                catEn = jsonObject1.getString("categoryen");
-                                price = jsonObject1.getString("plprice");
 
-                                if (cat == "") {
-                                    planItems.add(new PlanItem(titleAr, titleEn, descAr, descEn, catAr, catEn, price));
-                                } else {
-                                    if (cat == descEn) {
-                                        planItems.add(new PlanItem(titleAr, titleEn, descAr, descEn, catAr, catEn, price));
+                            if (message.equalsIgnoreCase("data_exist")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                String price = null, titleEn = null, titleAr = null, descAr = null, descEn = null, catAr = null, catEn = null;
+                                String planId = "";
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                                    planId = jsonObject1.getString("plid");
+                                    titleAr = jsonObject1.getString("pltitlear");
+                                    titleEn = jsonObject1.getString("pltitleen");
+                                    descAr = jsonObject1.getString("pldescar");
+                                    descEn = jsonObject1.getString("pldescen");
+                                    catAr = jsonObject1.getString("categoryar");
+                                    catEn = jsonObject1.getString("categoryen");
+                                    price = jsonObject1.getString("plprice");
+
+                                    if (cat == "") {
+                                        planItems.add(new PlanItem(planId, titleAr, titleEn, descAr, descEn, catAr, catEn, price));
+                                    } else {
+                                        if (cat == descEn) {
+                                            planItems.add(new PlanItem(planId, titleAr, titleEn, descAr, descEn, catAr, catEn, price));
+                                        }
                                     }
+
+                                    if (!SPINNERLIST.contains(catEn)) {
+                                        SPINNERLIST.add(catEn);
+                                    }
+
+
                                 }
 
-                                if (!SPINNERLIST.contains(catEn)) {
-                                    SPINNERLIST.add(catEn);
-                                }
+
+                                listAdapter = new ListViewAdapter(getActivity(), planItems);
+                                listViewPlans.setAdapter(listAdapter);
+                                listAdapter.notifyDataSetChanged();
+
+
+                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                                        android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
+                                spinnerPlans.setAdapter(arrayAdapter);
+                            } else {
+
+                                //data not exist
+                                rlDataNotExist.setVisibility(View.VISIBLE);
+
                             }
 
 
-                            listAdapter = new ListViewAdapter(getActivity(), planItems);
-                            listViewPlans.setAdapter(listAdapter);
-                            listAdapter.notifyDataSetChanged();
-
-
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                                    android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-                            spinnerPlans.setAdapter(arrayAdapter);
-
-
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.e("error343412", e.getMessage());
+                            //e.printStackTrace();
+                            //Toast.makeText(getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            //Log.e("error343412", e.getMessage());
+                            //Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+
                         } finally {
                             pdLoading.dismiss();
                         }
@@ -242,9 +277,22 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 
     }
 
+//    @OnClick(R.id.btnOrderWeb)
+//    public void btnWantWebSire(View view) {
+//        Toast.makeText(context, "want a website", Toast.LENGTH_SHORT).show();
+//
+//    }
+
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        unbinder.unbind();
+//    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        this.menu = menu;
         if (!new UserSessionManager(getActivity()).isUserLoggedIn()) {
             getActivity().getMenuInflater().inflate(R.menu.menu_order_now, menu);
         }
@@ -254,6 +302,13 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        if (thereIsSelected) {
+            this.menu.clear();
+            getActivity().getMenuInflater().inflate(R.menu.menu_social_media, this.menu);
+        } else {
+            this.menu.clear();
+            getActivity().getMenuInflater().inflate(R.menu.menu_order_more, this.menu);
+        }
     }
 
     @Override
@@ -261,9 +316,20 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
         switch (item.getItemId()) {
             case R.id.login:
                 //Toast.makeText(context, "Show the login page", Toast.LENGTH_SHORT).show();
-
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
+            case R.id.thereAreMoreSelected:
+                Intent intent = new Intent(getActivity(), OrderMoreActvity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("ARRAYLIST", (Serializable) selectedPlanItem);
+                intent.putExtra("BUNDLE", args);
+                startActivity(intent);
+
+
+                break;
+            default:
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -300,25 +366,9 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 
     }
 
-//    @OnClick(R.id.btnOrderWeb)
-//    public void btnWantWebSire(View view) {
-//        Toast.makeText(context, "want a website", Toast.LENGTH_SHORT).show();
-//
-//    }
-
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        unbinder.unbind();
-//    }
-
-    ListView listViewPlans = null;
-    ListViewAdapter listAdapter = null;
-    String cat = "";
-
     public void init() {
 
-        spinnerPlans = (Spinner) viewRoot.findViewById(R.id.spinnerPlans);
+        spinnerPlans = (Spinner) viewRoot.findViewById(R.id.ll).findViewById(R.id.spinnerPlans);
         spinnerPlans.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -334,9 +384,21 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
                 //fetchingData(URLs.URL_ORDER_NOW);
             }
         });
+
+        ivAddNewOrder = (ImageView) viewRoot.findViewById(R.id.ll).findViewById(R.id.ivAddNewOrder);
+        ivAddNewOrder.setOnClickListener(this);
+
         listViewPlans = (ListView) viewRoot.findViewById(R.id.listViewPlans);
         listAdapter = new ListViewAdapter(getActivity(), planItems);
         listViewPlans.setAdapter(listAdapter);
+
+        rlDataNotExist = (RelativeLayout) viewRoot.findViewById(R.id.rlDataNotExist);
+        rlDataNotExist.findViewById(R.id.btnRetry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchingData(URLs.URL_ORDER_NOW);
+            }
+        });
 
 
         fabChatting = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
@@ -364,81 +426,11 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 
     }
 
-    class ListViewAdapter extends BaseAdapter {
-
-        Context context = null;
-        ArrayList<PlanItem> planItems = new ArrayList<PlanItem>();
-
-        public ListViewAdapter(Context context, ArrayList<PlanItem> planItems) {
-            this.context = context;
-            this.planItems = planItems;
-        }
-
-
-        @Override
-        public int getCount() {
-            return this.planItems.size();
-        }
-
-        @Override
-        public PlanItem getItem(int position) {
-            return this.planItems.get(position);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
-
-            View v = null;
-
-            v = LayoutInflater.from(context).inflate(R.layout.plan_list_item, null);
-            v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in));
-            v.setAlpha(.9f);
-
-            final PlanItem planItem = getItem(position);
-
-
-            TextView tvPlanTitle = null;
-            TextView tvPlanOrderNow = null;
-            TextView tvPlanDesc = null;
-            TextView tvPlanPrice = null;
-            tvPlanTitle = (TextView) v.findViewById(R.id.tvPlanTitle);
-            tvPlanOrderNow = (TextView) v.findViewById(R.id.tvPlanOrderNow);
-            tvPlanDesc = (TextView) v.findViewById(R.id.llDescAndPrice).findViewById(R.id.tvPlanDesc);
-            tvPlanPrice = (TextView) v.findViewById(R.id.llDescAndPrice).findViewById(R.id.tvPrice);
-
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-//                tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn(), Html.FROM_HTML_MODE_LEGACY));
-//            } else {
-//                tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn()));
-//            }
-            tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn()).toString());
-            tvPlanTitle.setText(planItem.getTitleEn());
-            tvPlanOrderNow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivityForViewing("https://www.paypal.com/cgi-bin/webscr");
-                    //startActivityForViewing("https://www.paypal.com/cgi-bin/webscr?charset='utf-8'&cmd='_xclick'&business='info@ideas2tech.com'&item_name=''&item_number=''&amount=''&quantity=''&quantity=''&currency_code='USD'&no_shipping=1&handling=0&cancel_return='https://ideas2tech/pay_cancel.php'&success_return='https://ideas2tech/pay_success.php'");
-                }
-            });
-            tvPlanPrice.setText(planItem.getPrice());
-
-
-            return v;
-        }
-    }
-
-
     public void startActivityForViewing(String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
     }
-
 
     /**
      * This method prepares all the payments params to be sent to PayuBaseActivity.java
@@ -563,8 +555,6 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
     protected String concatParams(String key, String value) {
         return key + "=" + value + "&";
     }
-
-    //TODO This method is used only if integrating One Tap Payments
 
     /**
      * This method prepares a HashMap of cardToken as key and merchantHash as value.
@@ -692,12 +682,12 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
     }
 
     //TODO This method is used only if integrating One Tap Payments
+
+    //TODO This method is used only if integrating One Tap Payments
     @Override
     public void getOneClickHash(String cardToken, String merchantKey, String userCredentials) {
 
     }
-
-    //TODO This method is used only if integrating One Tap Payments
 
     /**
      * This method will be called as a async task, regardless of merchant implementation.
@@ -718,7 +708,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 
     }
 
-    //TODO This method is used if integrating One Tap Payments
+    //TODO This method is used only if integrating One Tap Payments
 
     /**
      * This method stores merchantHash and cardToken on merchant server.
@@ -780,7 +770,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
         }.execute();
     }
 
-    //TODO This method is used only if integrating One Tap Payments
+    //TODO This method is used if integrating One Tap Payments
 
     /**
      * This method will be called as a async task, regardless of merchant implementation.
@@ -802,6 +792,8 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 
     }
 
+    //TODO This method is used only if integrating One Tap Payments
+
     /**
      * This method adds the Payuhashes and other required params to intent and launches the PayuBaseActivity.java
      *
@@ -816,10 +808,10 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
 //
 //        startActivityForResult(intent, PayuConstants.PAYU_REQUEST_CODE);
 
-        //Lets fetch all the one click card tokens first
-        //fetchMerchantHashes(intent);
-
     }
+    //Lets fetch all the one click card tokens first
+    //fetchMerchantHashes(intent);
+
 
     /**
      * This method fetches merchantHash and cardToken already stored on merchant server.
@@ -887,6 +879,128 @@ public class OrderNow extends Fragment implements OneClickPaymentListener {
                 startActivityForResult(baseActivityIntent, PayuConstants.PAYU_REQUEST_CODE);
             }
         }.execute();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.equals(ivAddNewOrder)) {
+            startActivity(new Intent(OrderNow.this.getActivity(), AddNewOrderActivity.class));
+        }
+
+
+    }
+
+    class ListViewAdapter extends BaseAdapter {
+
+        Context context = null;
+        ArrayList<PlanItem> planItems = new ArrayList<PlanItem>();
+
+        public ListViewAdapter(Context context, ArrayList<PlanItem> planItems) {
+            this.context = context;
+            this.planItems = planItems;
+        }
+
+
+        @Override
+        public int getCount() {
+            return this.planItems.size();
+        }
+
+        @Override
+        public PlanItem getItem(int position) {
+            return this.planItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+
+            View v = null;
+
+            v = LayoutInflater.from(context).inflate(R.layout.plan_list_item, null);
+            v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in));
+            v.setAlpha(.9f);
+
+            final PlanItem planItem = getItem(position);
+
+
+            TextView tvPlanTitle = null;
+            TextView tvPlanOrderNow = null;
+            TextView tvPlanDesc = null;
+            TextView tvPlanPrice = null;
+            CheckBox checkBox = null;
+
+            tvPlanTitle = (TextView) v.findViewById(R.id.rlCheckBox).findViewById(R.id.tvPlanTitle);
+            checkBox = (CheckBox) v.findViewById(R.id.rlCheckBox).findViewById(R.id.cbPlanItem);
+            tvPlanOrderNow = (TextView) v.findViewById(R.id.tvPlanOrderNow);
+            tvPlanDesc = (TextView) v.findViewById(R.id.llDescAndPrice).findViewById(R.id.tvPlanDesc);
+            tvPlanPrice = (TextView) v.findViewById(R.id.llDescAndPrice).findViewById(R.id.tvPrice);
+
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+//                tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn(), Html.FROM_HTML_MODE_LEGACY));
+//            } else {
+//                tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn()));
+//            }
+            tvPlanDesc.setText(Html.fromHtml(planItem.getDescEn()).toString());
+            tvPlanTitle.setText(planItem.getTitleEn());
+            tvPlanOrderNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForViewing(URLs.PAYPAL);
+                    //startActivityForViewing("https://www.paypal.com/cgi-bin/webscr?charset='utf-8'&cmd='_xclick'&business='info@ideas2tech.com'&item_name=''&item_number=''&amount=''&quantity=''&quantity=''&currency_code='USD'&no_shipping=1&handling=0&cancel_return='https://ideas2tech/pay_cancel.php'&success_return='https://ideas2tech/pay_success.php'");
+                }
+            });
+            tvPlanPrice.setText(planItem.getPrice());
+
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Iterator<PlanItem> iterator = null;
+                    if (compoundButton.isChecked()) {
+                        planItem.setChecked(true);
+                        if (!selectedPlanItem.contains(planItem)) {
+                            selectedPlanItem.add(planItem);
+                        }
+                    } else {
+                        if (selectedPlanItem.contains(planItem)) {
+                            iterator = selectedPlanItem.iterator();
+                            while (iterator.hasNext()) {
+                                PlanItem planItem1 = iterator.next();
+                                if (planItem.equals(planItem1)) {
+                                    iterator.remove();
+                                    break;
+                                }
+                            }
+                        }
+                        planItem.setChecked(false);
+                    }
+                    if (!selectedPlanItem.isEmpty()) {
+                        thereIsSelected = false;
+                        onPrepareOptionsMenu(OrderNow.this.menu);
+                    } else {
+                        thereIsSelected = true;
+                        onPrepareOptionsMenu(OrderNow.this.menu);
+                    }
+                    //Toast.makeText(context, selectedPlanItem.size()+"", Toast.LENGTH_SHORT).show();
+                }
+            });
+            if (planItem.isChecked()) {
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+
+
+            return v;
+        }
+
+
     }
 
     //TODO This method is used only if integrating One Tap Payments

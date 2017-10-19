@@ -8,10 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/FORTSDKv1.4.1" />
+            <option value="$PROJECT_DIR$/SampleApp" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/sdkui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

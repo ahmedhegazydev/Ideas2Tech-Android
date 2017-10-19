@@ -20,7 +20,7 @@ public class UserSessionManager {
     // All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
     //user id from login
-    private static final String KEY_USER_ID = "KEY_USER_ID";
+    public static final String KEY_USER_ID = "KEY_USER_ID";
     // Shared Preferences reference
     SharedPreferences pref;
     // Editor reference for Shared preferences
@@ -91,6 +91,10 @@ public class UserSessionManager {
 
         // user email id
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+
+        //user id
+        user.put(KEY_USER_ID, pref.getString(KEY_USER_ID, null));
+
 
         // return user
         return user;
