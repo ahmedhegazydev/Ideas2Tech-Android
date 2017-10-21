@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInstaller;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,15 +17,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -34,7 +30,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -46,9 +41,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.RecordActivity;
-import com.example.ahmed.convertwebsitetoapp.chatting.MainActivity;
 import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
-import com.example.ahmed.convertwebsitetoapp.model.Drawer;
+import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import com.mancj.slideup.SlideUp;
 
 import org.json.JSONException;
@@ -59,7 +53,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -89,6 +82,9 @@ public class ContactUs extends Fragment {
     String message = "", to = "", userName = "", title = "", email = "";
     EditText etTitle;
     ProgressDialog progressDialog = null;
+    String userId = "";
+    FloatingActionButton fabChatting = null;
+    View viewMain = null;
     private SlideUp slideUp;
 
     public final static boolean isValidEmail(CharSequence target) {
@@ -99,41 +95,109 @@ public class ContactUs extends Fragment {
         }
     }
 
+    public static void setAlphaAnimation(View v) {
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
+        fadeOut.setDuration(300);
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(v, "alpha", .3f, 1f);
+        fadeIn.setDuration(300);
+        final AnimatorSet mAnimationSet = new AnimatorSet();
+        mAnimationSet.play(fadeIn).after(fadeOut);
+        mAnimationSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mAnimationSet.start();
+            }
+        });
+        mAnimationSet.start();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewRoot = inflater.inflate(R.layout.contact_main, container, false);
+
 
         context = getContext();
-
-
-//        Drawer.title.setText("Contact Us");
-//        Drawer.postionSelected = 5;
-//        Drawer.drawerAdapter.notifyDataSetChanged();
-
         setHasOptionsMenu(true);
         setMenuVisibility(true);
 
 
+        userId = new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID);
+        if (TextUtils.isEmpty(userId)) {
+            viewRoot = inflater.inflate(R.layout.contact_main_notloggedin, container, false);
+            Toast.makeText(context, "not logged in", Toast.LENGTH_SHORT).show();
+            initFieldsNotLoggedIn();
+        } else {
+            viewRoot = inflater.inflate(R.layout.contact_main_loggedin, container, false);
+            initFieldaLoggedIn();
+            Toast.makeText(context, "logged in", Toast.LENGTH_SHORT).show();
+
+        }
+
         init();
+
+        //fetching the contact info from json into textviews
+        getContactInfo(URLs.URL_CONTACT_INFO);
+
 
         return viewRoot;
     }
 
-    FloatingActionButton fabChatting = null;
-    private void init() {
-        View viewMain = viewRoot.findViewById(R.id.ll1).findViewById(R.id.ll2);
+    private void getContactInfo(String url) {
 
-        etName = (EditText) viewMain.findViewById(R.id.llName).findViewById(R.id.etName);
-        etEmail = (EditText) viewMain.findViewById(R.id.llEmail).findViewById(R.id.etEmail);
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("contactInfo20130074", response);
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Snackbar.make(viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void initFieldaLoggedIn() {
+
+        viewMain = viewRoot.findViewById(R.id.ll1).findViewById(R.id.ll2);
+
         etMessage = (EditText) viewMain.findViewById(R.id.llMessageContent).findViewById(R.id.etMessage);
         etTitle = (EditText) viewMain.findViewById(R.id.etMessageTitle);
 
-        viewRoot.findViewById(R.id.btnSendInfo).setOnClickListener(new View.OnClickListener() {
+        viewMain.findViewById(R.id.btnSendInfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkValidation();
             }
         });
+    }
+
+    private void initFieldsNotLoggedIn() {
+
+        viewMain = viewRoot.findViewById(R.id.ll1).findViewById(R.id.ll2);
+        etName = (EditText) viewMain.findViewById(R.id.llName).findViewById(R.id.etName);
+        etEmail = (EditText) viewMain.findViewById(R.id.llEmail).findViewById(R.id.etEmail);
+        etMessage = (EditText) viewMain.findViewById(R.id.llMessageContent).findViewById(R.id.etMessage);
+        etTitle = (EditText) viewMain.findViewById(R.id.etMessageTitle);
+        viewMain.findViewById(R.id.btnSendInfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkValidation();
+            }
+        });
+    }
+
+    private void init() {
+
 
 //        final ScrollView sv = (ScrollView) viewRoot.findViewById(R.id.sv);
 
@@ -186,37 +250,17 @@ public class ContactUs extends Fragment {
             }
         });
 
-        fabChatting  = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
+        fabChatting = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
         fabChatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showingTheChattingView();
             }
         });
-       // setAlphaAnimation(fabChatting);
+        // setAlphaAnimation(fabChatting);
 
 
     }
-
-
-
-    public static void setAlphaAnimation(View v) {
-        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
-        fadeOut.setDuration(300);
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(v, "alpha", .3f, 1f);
-        fadeIn.setDuration(300);
-        final AnimatorSet mAnimationSet = new AnimatorSet();
-        mAnimationSet.play(fadeIn).after(fadeOut);
-        mAnimationSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mAnimationSet.start();
-            }
-        });
-        mAnimationSet.start();
-    }
-
 
     public void sendEmail(String from, String to, String subject, String messageText) {
         try {
@@ -259,43 +303,56 @@ public class ContactUs extends Fragment {
     }
 
     private void checkValidation() {
-        if (TextUtils.isEmpty(etName.getText().toString())) {
-            etName.setError("Please, Enter your name");
-            etName.requestFocus();
-            Toast.makeText(context, "Please, Enter your name", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(etEmail.getText())) {
-            etEmail.setError("Please, Enter your email");
-            etEmail.requestFocus();
-            Toast.makeText(context, "Please, Enter your email", Toast.LENGTH_SHORT).show();
-            return;
+        if (TextUtils.isEmpty(userId)) {
+            if (TextUtils.isEmpty(etName.getText().toString())) {
+                etName.setError("Please, Enter your name");
+                etName.requestFocus();
+                Toast.makeText(context, "Please, Enter your name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(etEmail.getText())) {
+                etEmail.setError("Please, Enter your email");
+                etEmail.requestFocus();
+                Toast.makeText(context, "Please, Enter your email", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!isValidEmail(etEmail.getText().toString())) {
+                etEmail.setError("Please, Enter valid email");
+                etEmail.requestFocus();
+                //Toast.makeText(context, "Please, Enter your email", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(etTitle.getText().toString())) {
+                etTitle.setError("Please, Enter your message title");
+                etTitle.requestFocus();
+                Toast.makeText(context, "Please, Enter your message title", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(etMessage.getText())) {
+                etMessage.setError("Please, Enter your message");
+                etMessage.requestFocus();
+                Toast.makeText(context, "Please, Enter your message", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+        } else {
+
+            if (TextUtils.isEmpty(etTitle.getText().toString())) {
+                etTitle.setError("Please, Enter your message title");
+                etTitle.requestFocus();
+                Toast.makeText(context, "Please, Enter your message title", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(etMessage.getText())) {
+                etMessage.setError("Please, Enter your message");
+                etMessage.requestFocus();
+                Toast.makeText(context, "Please, Enter your message", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
-        if (!isValidEmail(etEmail.getText().toString())) {
-            etEmail.setError("Please, Enter valid email");
-            etEmail.requestFocus();
-            //Toast.makeText(context, "Please, Enter your email", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(etTitle.getText().toString())) {
-            etTitle.setError("Please, Enter your message title");
-            etTitle.requestFocus();
-            Toast.makeText(context, "Please, Enter your message title", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(etMessage.getText())) {
-            etMessage.setError("Please, Enter your message");
-            etMessage.requestFocus();
-            Toast.makeText(context, "Please, Enter your message", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        //sendInfo();
-        //sendEmail();
-        message = etMessage.getText().toString();
-        userName = etName.getText().toString();
-        from = etEmail.getText().toString();
-        to = "engahmedali2022@gmail.com";
 
         pdialog = ProgressDialog.show(context, "", "Sending Mail...", true);
         new RetreiveFeedTask2().execute();
@@ -362,10 +419,19 @@ public class ContactUs extends Fragment {
         progressDialog.show();
 
 
-        email = etEmail.getText().toString();
-        userName = etName.getText().toString();
-        title = etTitle.getText().toString();
-        message = etMessage.getText().toString();
+        //from = "";
+        //from = etEmail.getText().toString();
+        from = "engahmedali2022@gmail.com";
+        to = "engahmedali2022@gmail.com";
+        if (TextUtils.isEmpty(userId)) {
+            title = etTitle.getText().toString();
+            message = etMessage.getText().toString();
+            email = etEmail.getText().toString();
+            userName = etName.getText().toString();
+        } else {
+            title = etTitle.getText().toString();
+            message = etMessage.getText().toString();
+        }
 
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -408,21 +474,33 @@ public class ContactUs extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "onErrorResponse" + error.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), "onErrorResponse" + error.getMessage(), Toast.LENGTH_LONG).show();
                         //Log.d("ErrorResponse", error.getMessage());
-                        //Snackbar.make(findViewById(R.id.regDrawerLayout), "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        Snackbar.make(viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                     }
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", userName);
-                params.put("email", email);
-                params.put("body", message);
-                params.put("title", title);
-                params.put("id", "");
+                if (TextUtils.isEmpty(userId)) {
+                    params.put("name", userName);
+                    params.put("email", email);
+                    params.put("body", message);
+                    params.put("title", title);
+                    params.put("id", "");
+                } else {
+                    params.put("name", "");
+                    params.put("email", "");
+                    params.put("body", message);
+                    params.put("title", title);
+                    params.put("id", userId);
+                }
+
+
                 return params;
             }
         };

@@ -63,14 +63,22 @@ public class AddNewOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_order);
 
 
         context = this;
         viewRoot = findViewById(R.id.llAddNewOrder);
 
         getUserId();
-        initFields();
+
+        if (userId != "") {
+            setContentView(R.layout.activity_add_new_order_loggedin);
+            initFieldsLoggedIn();
+        } else {
+            setContentView(R.layout.activity_add_new_order_notloggedin);
+            initFieldsNotLoggedIn();
+        }
+
+
         getAllCatToSpinner(URLs.URL_SERVICES);
 
 
@@ -141,14 +149,15 @@ public class AddNewOrderActivity extends AppCompatActivity {
 
     }
 
-    private void initFields() {
-        etUserEmail = ((TextInputLayout) findViewById(R.id.etEmail)).getEditText();
-        etFirstName = ((TextInputLayout) findViewById(R.id.etFirstName)).getEditText();
-        etLastName = ((TextInputLayout) findViewById(R.id.etLastNane)).getEditText();
-        etDesc = ((TextInputLayout) findViewById(R.id.etWhatDoUWant)).getEditText();
-        etWhatsAppNumber = ((TextInputLayout) findViewById(R.id.etWhatsNumber)).getEditText();
-        etPhoneNumber = ((TextInputLayout) findViewById(R.id.etPhoneNumber)).getEditText();
+    private void initFieldsLoggedIn() {
+//        etUserEmail = ((TextInputLayout) findViewById(R.id.etEmail)).getEditText();
+//        etFirstName = ((TextInputLayout) findViewById(R.id.etFirstName)).getEditText()
+//        etPhoneNumber = ((TextInputLayout) findViewById(R.id.etPhoneNumber)).getEditText();
+//        etLastName = ((TextInputLayout) findViewById(R.id.etLastNane)).getEditText();
 
+        etDesc = ((TextInputLayout) findViewById(R.id.etWhatDoUWant)).getEditText();
+        ;
+        etWhatsAppNumber = ((TextInputLayout) findViewById(R.id.etWhatsNumber)).getEditText();
         spinnerServiceType = (Spinner) findViewById(R.id.spinnerServiceTpe);
         spinnerServiceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -161,7 +170,40 @@ public class AddNewOrderActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                Toast.makeText(context, serviceId, Toast.LENGTH_SHORT).show();
+               //Toast.makeText(context, serviceId, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
+    private void initFieldsNotLoggedIn() {
+        etUserEmail = ((TextInputLayout) findViewById(R.id.etEmail)).getEditText();
+        etFirstName = ((TextInputLayout) findViewById(R.id.etFirstName)).getEditText();
+        etPhoneNumber = ((TextInputLayout) findViewById(R.id.etPhoneNumber)).getEditText();
+        etLastName = ((TextInputLayout) findViewById(R.id.etLastNane)).getEditText();
+
+        etDesc = ((TextInputLayout) findViewById(R.id.etWhatDoUWant)).getEditText();
+        ;
+        etWhatsAppNumber = ((TextInputLayout) findViewById(R.id.etWhatsNumber)).getEditText();
+        spinnerServiceType = (Spinner) findViewById(R.id.spinnerServiceTpe);
+        spinnerServiceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                spinnerValue = spinnerServiceType.getSelectedItem().toString();
+                for (String key : hmCatWithIds.keySet()) {
+                    if (hmCatWithIds.get(key).equalsIgnoreCase(spinnerValue)) {
+                        serviceId = key;
+                        break;
+                    }
+                }
+                //Toast.makeText(context, serviceId, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -179,13 +221,14 @@ public class AddNewOrderActivity extends AppCompatActivity {
         userId = userSessionManager.getUserDetails().get(UserSessionManager.KEY_USER_ID);
         //check if the id is empty = the user didn't logged in
         //otherwise the user logged in already
-        if (userId.toString().length() == 0) {
-            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
-            userId = "0";
+        //Toast.makeText(context, userId, Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(userId)) {
+            //Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
+            userId = "";
 
 
         } else {
-            Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
         }
         //=-----------------------------------------
     }
@@ -193,7 +236,7 @@ public class AddNewOrderActivity extends AppCompatActivity {
     public void btnSendMyOrder(View view) {
 
         //the user not logged in
-        if (userId.equalsIgnoreCase("0")) {
+        if (userId.equalsIgnoreCase("")) {
 
             if (TextUtils.isEmpty(etFirstName.getText())) {
                 etFirstName.setError("Enter FirstName");
@@ -221,6 +264,12 @@ public class AddNewOrderActivity extends AppCompatActivity {
                 etDesc.requestFocus();
                 return;
             }
+
+            userFullName = etFirstName.getText().toString() + " " + etLastName.getText().toString();
+            phone = etPhoneNumber.getText().toString();
+            email = etUserEmail.getText().toString();
+
+
         } else {
             if (TextUtils.isEmpty(etDesc.getText())) {
                 etDesc.setError("Enter the description");
@@ -238,14 +287,8 @@ public class AddNewOrderActivity extends AppCompatActivity {
                 break;
             }
         }
-
-
-        whatsAppNumber = String.valueOf(etWhatsAppNumber.getText());
-        userFullName = etFirstName.getText().toString() + " " + etLastName.getText().toString();
         desc = etDesc.getText().toString();
-        phone = etPhoneNumber.getText().toString();
-        email = etUserEmail.getText().toString();
-
+        whatsAppNumber = String.valueOf(etWhatsAppNumber.getText());
 
         Log.e("whatsNumber", whatsAppNumber);
         Log.e("servId", serviceId);
@@ -293,7 +336,7 @@ public class AddNewOrderActivity extends AppCompatActivity {
                                 payEmail = jsonObject1.getString("payemail");
 
                                 from = to = payEmail;
-                                messageBody = "The adasdasd from "+orderNumber;
+                                messageBody = "The adasdasd from " + orderNumber;
 
 
                                 new AsyncSendingEmail(context).execute();
@@ -328,7 +371,7 @@ public class AddNewOrderActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                if (userId == "0") {
+                if (userId.equalsIgnoreCase( "")) {
                     userId = "";
                     params.put("id", userId);
                     params.put("name", userFullName);

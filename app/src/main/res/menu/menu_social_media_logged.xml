@@ -6,8 +6,6 @@
     <item
         android:id="@+id/signOut"
         android:title="SignOut" />
-
-
     <item
         android:id="@+id/socialFaceBook"
         android:icon="@drawable/facbook4"

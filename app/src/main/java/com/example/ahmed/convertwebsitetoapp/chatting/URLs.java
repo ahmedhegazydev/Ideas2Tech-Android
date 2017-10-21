@@ -29,5 +29,8 @@ public class URLs {
     public static final String URL_PREV_ORDERS = LINK + "/api/orders";
     public static final String URL_ADD_NEW_ORDER = LINK + "/api/paynow";
 
+    public static final String URL_SOCIAL_MEDIA = LINK + "/api/socialmedia";
+    public static final String URL_CONTACT_INFO = LINK + "/api/contactinfo";
+
 
 }

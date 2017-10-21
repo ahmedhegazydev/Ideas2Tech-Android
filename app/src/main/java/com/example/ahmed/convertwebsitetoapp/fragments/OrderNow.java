@@ -10,10 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CheckableImageButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -29,17 +26,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,26 +42,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.AddNewOrderActivity;
 import com.example.ahmed.convertwebsitetoapp.OrderMoreActvity;
-import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
 //import com.example.ahmed.convertwebsitetoapp.activities.PayFortFactory;
 import com.example.ahmed.convertwebsitetoapp.chatting.LoginActivity;
 import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
-import com.example.ahmed.convertwebsitetoapp.model.Drawer;
 import com.example.ahmed.convertwebsitetoapp.model.PlanItem;
 import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
-import com.google.android.gms.common.api.BooleanResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.wallet.Wallet;
-import com.payu.india.CallBackHandler.OnetapCallback;
 import com.payu.india.Extras.PayUChecksum;
 import com.payu.india.Interfaces.OneClickPaymentListener;
 import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
-import com.payu.india.Payu.Payu;
 import com.payu.india.Payu.PayuConstants;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 //import com.payu.payuui.Activity.PayUBaseActivity;
 
 import org.json.JSONArray;
@@ -87,9 +72,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 //import com.example.ahmed.convertwebsitetoapp.RecordActivity;
@@ -304,7 +287,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
         super.onPrepareOptionsMenu(menu);
         if (thereIsSelected) {
             this.menu.clear();
-            getActivity().getMenuInflater().inflate(R.menu.menu_social_media, this.menu);
+            getActivity().getMenuInflater().inflate(R.menu.menu_social_media_logged, this.menu);
         } else {
             this.menu.clear();
             getActivity().getMenuInflater().inflate(R.menu.menu_order_more, this.menu);

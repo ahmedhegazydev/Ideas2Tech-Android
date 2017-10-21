@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/loginNow"
+        android:title="Login" />
+    <item
+        android:id="@+id/socialFaceBook"
+        android:icon="@drawable/facbook4"
+        android:title="facebook"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/socialTwitter"
+        android:icon="@drawable/twitter4"
+        android:title="twitter"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/socialYoutube"
+        android:icon="@drawable/youtube4"
+        android:title="youtube"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/socialInst"
+        android:icon="@drawable/intgram4"
+        android:title="instagram"
+        app:showAsAction="always" />
+
+
+</menu>

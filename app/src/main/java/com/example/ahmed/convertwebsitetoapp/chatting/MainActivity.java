@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -301,6 +302,8 @@ public class MainActivity extends AppCompatActivity {
                 goToFragment(new ContactUs());
                 break;
             case TAG_FAQS:
+                navItemIndex = 7;
+                CURRENT_TAG = TAG_FAQS;
                 goToFragment(new FAQs());
                 break;
             case TAG_ORDER_NOW:
@@ -466,14 +469,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home_page:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME_PAGE;
+                        session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
                         break;
                     case R.id.nav_our_projects:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_OUR_PROJECTS;
+                        session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
                         break;
                     case R.id.nav_services:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_SERVICES;
+                        session.postLastPressedFragment(MainActivity.TAG_SERVICES);
                         break;
                     case R.id.nav_prev_services:
                         navItemIndex = 3;
@@ -483,18 +489,22 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_order_now:
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_ORDER_NOW;
+                        session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
                         break;
                     case R.id.nav_about_us:
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_ABOUT_US;
+                        session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
                         break;
                     case R.id.nav_contact_us:
                         navItemIndex = 6;
                         CURRENT_TAG = TAG_CONTACT_US;
+                        session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
                         break;
                     case R.id.nav_faqs:
                         navItemIndex = 7;
                         CURRENT_TAG = TAG_FAQS;
+                        session.postLastPressedFragment(MainActivity.TAG_FAQS);
                         break;
                     case R.id.nav_sign_out:
                         //navItemIndex = 7;
@@ -594,7 +604,11 @@ public class MainActivity extends AppCompatActivity {
 //            getMenuInflater().inflate(R.menu.notifications, menu);
 //        }
 
-        getMenuInflater().inflate(R.menu.menu_social_media, menu);
+        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))){
+            getMenuInflater().inflate(R.menu.menu_social_media_not_logged, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_social_media_logged, menu);
+        }
         return true;
     }
 
@@ -621,7 +635,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.socialYoutube:
                 //Toast.makeText(this, "Youtube", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this, ActivityYoutube.class));
-
+                break;
+            case R.id.loginNow:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             case R.id.signOut:
                 signOut(MainActivity.this);
