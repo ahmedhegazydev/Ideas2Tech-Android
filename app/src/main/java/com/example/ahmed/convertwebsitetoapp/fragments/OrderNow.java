@@ -156,6 +156,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
 
 
         init();
+        setRetainInstance(true);
         fetchingData(URLs.URL_ORDER_NOW);
 
 

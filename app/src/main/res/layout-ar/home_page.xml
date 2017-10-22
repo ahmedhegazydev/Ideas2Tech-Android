@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pic1"
+    android:gravity="center"
+    android:orientation="vertical"
+
+    >
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llHomePage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:drawableLeft="@drawable/left_arrow"
+                android:text="خدماتنا"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/projects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/services"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="مشاريعنا"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/ordernow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/projects"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="عايز مشروع"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/prevOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ordernow"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="خدماتي السابقه"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/prevOrders"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="عن الشركه"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+
+                />
+
+            <TextView
+                android:id="@+id/contactus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/aboutUs"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="تواصل معنا الان"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+
+                />
+
+            <TextView
+                android:id="@+id/faqs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contactus"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="أساله و أجوبه"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/faqs"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
+                android:alpha=".8"
+                android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="خروج"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/rlFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:weightSum="100">
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="99"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/bacToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/frame"
+            android:layout_weight="1"
+            android:background="@color/logo"
+            android:text="Back To Home Page"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="Services"-->
+    <!--android:textAllCaps="true"-->
+    <!--android:textSize="20sp"-->
+
+    <!--/>-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service1" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service2" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Find more"-->
+    <!--android:textColor="@color/errorRed" />-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/round_rect_shape"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="Our Projects"-->
+    <!--android:textAllCaps="true"-->
+    <!--android:textSize="20sp" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service1" />-->
+
+    <!--<com.example.ahmed.convertwebsitetoapp.view.CircleImageView-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:src="@drawable/service2" />-->
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Find more"-->
+    <!--android:textColor="@color/errorRed" />-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+
+
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabChatting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/chatting" />
+</RelativeLayout>

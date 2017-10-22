@@ -35,8 +35,70 @@
                 android:orientation="vertical"
                 android:weightSum="100">
 
+                <LinearLayout
+                    android:id="@+id/llName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:text="الاسم"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
 
 
+                        />
+
+                    <EditText
+                        android:id="@+id/etName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_rounded"
+                        android:hint="ادخل الاسم..."
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:textSize="20sp"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:text="البريد"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_rounded"
+                        android:hint="أدخل البريد الالكتروني..."
+                        android:inputType="textEmailAddress"
+                        android:padding="10dp"
+                        android:textSize="20sp"
+
+                        />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llMessageTitle"
@@ -51,7 +113,7 @@
                         android:layout_width="110dp"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:padding="0dp"
+                        android:padding="10dp"
                         android:text="العنوان"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
@@ -62,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/edittext_rounded"
-                        android:hint="أدخل العنوان...."
+                        android:hint="أدخل عنوان للرساله..."
                         android:inputType="textAutoComplete|textCapWords"
                         android:padding="10dp"
                         android:textSize="20sp"
@@ -84,8 +146,8 @@
                         android:layout_width="110dp"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:padding="0dp"
-                        android:text="الرساله"
+                        android:padding="10dp"
+                        android:text="المحتوي"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
 
@@ -95,7 +157,7 @@
                         android:layout_height="100dp"
                         android:layout_weight="1"
                         android:background="@drawable/edittext_rounded"
-                        android:hint="أدخل محتوي الرساله....."
+                        android:hint="أدخل محتوي الرساله..."
                         android:padding="10dp"
 
                         android:textSize="20sp" />
@@ -111,10 +173,12 @@
                     android:layout_weight="20"
                     android:background="@drawable/rounded_button"
                     android:padding="10dp"
-                    android:text="أرسال ....."
+                    android:text="إرسال الرساله"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+
+                    />
 
             </LinearLayout>
 

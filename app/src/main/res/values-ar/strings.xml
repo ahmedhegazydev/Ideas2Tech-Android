@@ -13,14 +13,24 @@
 
 
     <!-- Toolbar titles when navigation menu item is selected -->
-    <string-array name="nav_item_activity_titles">
+    <string-array name="nav_item_activity_titles_logged">
         <item>الصفحه الرئيسيه</item>
-        <item>عن الشركه</item>
         <item>مشاريعنا</item>
         <item>خدمات</item>
-
-
+        <item></item>
         <item>عايز مشروع</item>
+        <item>عن الشركه</item>
+        <item>تواصل معنا</item>
+        <item>أساله وأجوبه</item>
+        <item>خروج</item>
+    </string-array>
+
+    <string-array name="nav_item_activity_titles_not_logged">
+        <item>الصفحه الرئيسيه</item>
+        <item>مشاريعنا</item>
+        <item>خدمات</item>
+        <item>عايز مشروع</item>
+        <item>عن الشركه</item>
         <item>تواصل معنا</item>
         <item>أساله وأجوبه</item>
         <item>خروج</item>

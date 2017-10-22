@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
 
     <string-array name="titles">
         <item>Web Design</item>
@@ -31,7 +31,7 @@
     <string name="app_name">Ideas2Tech</string>
 
     <!-- Toolbar titles when navigation menu item is selected -->
-    <string-array name="nav_item_activity_titles">
+    <string-array name="nav_item_activity_titles_logged">
         <item>Home Page</item>
         <item>Our Projects</item>
         <item>Services</item>
@@ -44,8 +44,23 @@
     </string-array>
 
 
+    <string-array name="nav_item_activity_titles_not_logged">
+        <item>Home Page</item>
+        <item>Our Projects</item>
+        <item>Services</item>
+        <item>Order Now</item>
+        <item>About Us</item>
+        <item>Contact Us</item>
+        <item>FAQs</item>
+        <item>SignOut</item>
+    </string-array>
+
+
     <string name="CHATTING_CLIENT_ID">mobile_sdk_client_651b0d149b179b0694c5</string>
     <string name="CHATTING_APP_ID">277bf757e6b8dcc213d3633ff7f72a611ebfeab3a8b3095f</string>
     <string name="APP_ID">85CF9FF2-FA37-46DE-9A9F-7795232216DF</string>
+
+
+
 
 </resources>

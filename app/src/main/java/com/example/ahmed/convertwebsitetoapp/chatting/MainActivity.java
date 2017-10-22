@@ -13,8 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.os.UserManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +25,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +33,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.fragments.AboutUs;
@@ -42,10 +52,21 @@ import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import com.sendbird.android.OpenChannel;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
+import com.zendesk.sdk.model.access.AnonymousIdentity;
+import com.zendesk.sdk.model.access.Identity;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
 import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Locale;
+
+import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.session.Configuration;
+import co.chatsdk.firebase.FirebaseModule;
+import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
+import co.chatsdk.ui.InterfaceManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -142,13 +163,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
+
+
+        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_not_logged);
+            // load toolbar titles from string resources
+            activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_not_logged);
+
+        } else {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
+            // load toolbar titles from string resources
+            activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_logged);
+
+        }
+
+
 //        txtName = (TextView) navHeader.findViewById(R.id.name);
 //        txtWebsite = (TextView) navHeader.findViewById(R.id.website);
 //        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
 //        imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
-
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
 
         //ZopimChat.init(getResources().getString(R.string.CHATTING_APP_ID));
@@ -158,11 +193,14 @@ public class MainActivity extends AppCompatActivity {
 //                .phoneNumber("0123456789")
 //                .build();
 //        ZopimChat.setVisitorInfo(visitorData);
+
         ZendeskConfig.INSTANCE.init(this, "https://individual7623.zendesk.com", "277bf757e6b8dcc213d3633ff7f72a611ebfeab3a8b3095f",
                 "mobile_sdk_client_651b0d149b179b0694c5");
-        //Identity identity = new AnonymousIdentity.Builder().build();
-        //ZendeskConfig.INSTANCE.setIdentity(identity);
+        Identity identity = new AnonymousIdentity.Builder().build();
+        ZendeskConfig.INSTANCE.setIdentity(identity);
+
         //SendBird.init(getResources().getString(R.string.APP_ID), this);
+        //initChatSdk();
         fabChatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,6 +213,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ZopimChatActivity.class));
 
                 //startChatting();
+
+
+                //InterfaceManager.shared().a.startLoginActivity(getApplicationContext(), true);
+
 
             }
         });
@@ -192,6 +234,74 @@ public class MainActivity extends AppCompatActivity {
             loadHomeFragment();
         }
 
+
+        getSocialMedia(URLs.URL_SOCIAL_MEDIA);
+
+    }
+
+
+    private void initChatSdk() {
+        //Enable multi-dexing
+        MultiDex.install(getApplicationContext());
+        Context context = getApplicationContext();
+        // Create a new configuration
+        Configuration.Builder builder = new Configuration.Builder(context);
+//        builder.firebase(getActivity().getResources().getString(R.string.firebase_url),
+//                getActivity().getResources().getString(R.string.firebase_root_path),
+//                getActivity().getResources().getString(R.string.firebase_storage_url),
+//                "CloudMessaging Api Key");
+        // Perform any configuration steps
+        // Initialize the Chat SDK
+        ChatSDK.initialize(builder.build());
+        // Activate the Firebase module
+        FirebaseModule.activate(context);
+        // File storage is needed for profile image upload and image messages
+        FirebaseFileStorageModule.activate();
+        // Activate any other modules you need.
+        // ...
+
+
+    }
+
+
+    String urlFacebook = "", urlInstagram = "", urlYoutube = "", urlTwitter = "", urlGooglePlus = "", urlLikedin = "";
+
+    private void getSocialMedia(String urlSocialMedia) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlSocialMedia,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("socialMedia20130074", response);
+                        try {
+                            JSONObject jsonObject1 = new JSONObject(response.toString());
+                            JSONObject jsonObject11 = jsonObject1.getJSONObject("data");
+
+                            urlFacebook = jsonObject11.getString("facebook");
+                            urlGooglePlus = jsonObject11.getString("googleplus");
+                            urlTwitter = jsonObject11.getString("twitter");
+                            urlLikedin = jsonObject11.getString("linkedin");
+                            urlYoutube = jsonObject11.getString("youtube");
+                            urlInstagram = jsonObject11.getString("instagram");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Snackbar.make(findViewById(R.id.tlMainContainer), "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
     }
 
@@ -282,49 +392,89 @@ public class MainActivity extends AppCompatActivity {
      */
     public void loadHomeFragment() {
 
+        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+            switch (session.getLastPressedFragment()) {
+                case TAG_OUR_PROJECTS:
+                    navItemIndex = 1;
+                    CURRENT_TAG = TAG_OUR_PROJECTS;
+                    goToFragment(new OurProjects());
+                    break;
+                case TAG_ABOUT_US:
+                    navItemIndex = 5;
+                    CURRENT_TAG = TAG_ABOUT_US;
+                    goToFragment(new AboutUs());
+                    break;
+                case TAG_CONTACT_US:
+                    navItemIndex = 6;
+                    CURRENT_TAG = TAG_CONTACT_US;
+                    goToFragment(new ContactUs());
+                    break;
+                case TAG_FAQS:
+                    navItemIndex = 7;
+                    CURRENT_TAG = TAG_FAQS;
+                    goToFragment(new FAQs());
+                    break;
+                case TAG_ORDER_NOW:
+                    navItemIndex = 4;
+                    CURRENT_TAG = TAG_ORDER_NOW;
+                    goToFragment(new OrderNow());
+                    break;
+                case TAG_PREV_ORDERS:
 
+                    break;
+                case TAG_SERVICES:
+                    navItemIndex = 2;
+                    CURRENT_TAG = TAG_SERVICES;
+                    goToFragment(new Services());
+                    break;
+                default:
+                    navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME_PAGE;
+                    goToFragment(new HomePage());
+                    break;
+            }
+        } else {
+            switch (session.getLastPressedFragment()) {
+                case TAG_OUR_PROJECTS:
+                    navItemIndex = 1;
+                    CURRENT_TAG = TAG_OUR_PROJECTS;
+                    goToFragment(new OurProjects());
+                    break;
+                case TAG_ABOUT_US:
+                    navItemIndex = 4;
+                    CURRENT_TAG = TAG_ABOUT_US;
+                    goToFragment(new AboutUs());
+                    break;
+                case TAG_CONTACT_US:
+                    navItemIndex = 5;
+                    CURRENT_TAG = TAG_CONTACT_US;
+                    goToFragment(new ContactUs());
+                    break;
+                case TAG_FAQS:
+                    navItemIndex = 6;
+                    CURRENT_TAG = TAG_FAQS;
+                    goToFragment(new FAQs());
+                    break;
+                case TAG_ORDER_NOW:
+                    navItemIndex = 3;
+                    CURRENT_TAG = TAG_ORDER_NOW;
+                    goToFragment(new OrderNow());
+                    break;
+                case TAG_PREV_ORDERS:
 
-        switch (session.getLastPressedFragment()) {
-            case TAG_OUR_PROJECTS:
-                navItemIndex = 1;
-                CURRENT_TAG = TAG_OUR_PROJECTS;
-                goToFragment(new OurProjects());
+                    break;
+                case TAG_SERVICES:
+                    navItemIndex = 2;
+                    CURRENT_TAG = TAG_SERVICES;
+                    goToFragment(new Services());
+                    break;
+                default:
+                    navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME_PAGE;
+                    goToFragment(new HomePage());
+                    break;
+            }
 
-                break;
-            case TAG_ABOUT_US:
-                navItemIndex = 5;
-                CURRENT_TAG = TAG_ABOUT_US;
-                goToFragment(new AboutUs());
-                break;
-            case TAG_CONTACT_US:
-                navItemIndex = 6;
-                CURRENT_TAG = TAG_CONTACT_US;
-                goToFragment(new ContactUs());
-                break;
-            case TAG_FAQS:
-                navItemIndex = 7;
-                CURRENT_TAG = TAG_FAQS;
-                goToFragment(new FAQs());
-                break;
-            case TAG_ORDER_NOW:
-                navItemIndex = 4;
-                CURRENT_TAG = TAG_ORDER_NOW;
-                goToFragment(new OrderNow());
-                break;
-            case TAG_PREV_ORDERS:
-
-                break;
-            case TAG_SERVICES:
-                navItemIndex = 2;
-                CURRENT_TAG = TAG_SERVICES;
-                goToFragment(new Services());
-                break;
-
-            default:
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME_PAGE;
-                goToFragment(new HomePage());
-                break;
         }
         // selecting appropriate nav menu item
         selectNavMenu();
@@ -464,64 +614,106 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_home_page:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME_PAGE;
-                        session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
-                        break;
-                    case R.id.nav_our_projects:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_OUR_PROJECTS;
-                        session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
-                        break;
-                    case R.id.nav_services:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_SERVICES;
-                        session.postLastPressedFragment(MainActivity.TAG_SERVICES);
-                        break;
-                    case R.id.nav_prev_services:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_PREV_ORDERS;
-                        startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
-                        break;
-                    case R.id.nav_order_now:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_ORDER_NOW;
-                        session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
-                        break;
-                    case R.id.nav_about_us:
-                        navItemIndex = 5;
-                        CURRENT_TAG = TAG_ABOUT_US;
-                        session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
-                        break;
-                    case R.id.nav_contact_us:
-                        navItemIndex = 6;
-                        CURRENT_TAG = TAG_CONTACT_US;
-                        session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
-                        break;
-                    case R.id.nav_faqs:
-                        navItemIndex = 7;
-                        CURRENT_TAG = TAG_FAQS;
-                        session.postLastPressedFragment(MainActivity.TAG_FAQS);
-                        break;
-                    case R.id.nav_sign_out:
-                        //navItemIndex = 7;
-                        signOut(MainActivity.this);
-                        break;
-//                    case R.id.nav_about_us:
-//                        // launch new intent instead of loading fragment
-//                        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
-//                        drawer.closeDrawers();
-//                        return true;
-//                    case R.id.nav_privacy_policy:
-//                        // launch new intent instead of loading fragment
-//                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
-//                        drawer.closeDrawers();
-//                        return true;
-                    default:
-                        navItemIndex = 0;
+                if (!TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+                    switch (menuItem.getItemId()) {
+                        //Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.nav_home_page:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_HOME_PAGE;
+                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            break;
+                        case R.id.nav_our_projects:
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_OUR_PROJECTS;
+                            session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
+                            break;
+                        case R.id.nav_services:
+                            navItemIndex = 2;
+                            CURRENT_TAG = TAG_SERVICES;
+                            session.postLastPressedFragment(MainActivity.TAG_SERVICES);
+                            break;
+                        case R.id.nav_prev_services:
+                            navItemIndex = 3;
+                            CURRENT_TAG = TAG_PREV_ORDERS;
+                            startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
+                            break;
+                        case R.id.nav_order_now:
+                            navItemIndex = 4;
+                            CURRENT_TAG = TAG_ORDER_NOW;
+                            session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
+                            break;
+                        case R.id.nav_about_us:
+                            navItemIndex = 5;
+                            CURRENT_TAG = TAG_ABOUT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
+                            break;
+                        case R.id.nav_contact_us:
+                            navItemIndex = 6;
+                            CURRENT_TAG = TAG_CONTACT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
+                            break;
+                        case R.id.nav_faqs:
+                            navItemIndex = 7;
+                            CURRENT_TAG = TAG_FAQS;
+                            session.postLastPressedFragment(MainActivity.TAG_FAQS);
+                            break;
+                        case R.id.nav_sign_out:
+                            //navItemIndex = 7;
+                            signOut(MainActivity.this);
+                            break;
+                        default:
+                            navItemIndex = 0;
+                    }
+                } else {
+                    switch (menuItem.getItemId()) {
+                        //Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.nav_home_page:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_HOME_PAGE;
+                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            break;
+                        case R.id.nav_our_projects:
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_OUR_PROJECTS;
+                            session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
+                            break;
+                        case R.id.nav_services:
+                            navItemIndex = 2;
+                            CURRENT_TAG = TAG_SERVICES;
+                            session.postLastPressedFragment(MainActivity.TAG_SERVICES);
+                            break;
+//                        case R.id.nav_prev_services:
+//                            navItemIndex = 3;
+//                            CURRENT_TAG = TAG_PREV_ORDERS;
+//                            startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
+//                            break;
+                        case R.id.nav_order_now:
+                            navItemIndex = 3;
+                            CURRENT_TAG = TAG_ORDER_NOW;
+                            session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
+                            break;
+                        case R.id.nav_about_us:
+                            navItemIndex = 4;
+                            CURRENT_TAG = TAG_ABOUT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
+                            break;
+                        case R.id.nav_contact_us:
+                            navItemIndex = 5;
+                            CURRENT_TAG = TAG_CONTACT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
+                            break;
+                        case R.id.nav_faqs:
+                            navItemIndex = 6;
+                            CURRENT_TAG = TAG_FAQS;
+                            session.postLastPressedFragment(MainActivity.TAG_FAQS);
+                            break;
+                        case R.id.nav_sign_out:
+                            //navItemIndex = 7;
+                            signOut(MainActivity.this);
+                            break;
+                        default:
+                            navItemIndex = 0;
+                    }
                 }
 
                 //Checking if the item is in checked state or not, if not make it in checked state
@@ -604,9 +796,9 @@ public class MainActivity extends AppCompatActivity {
 //            getMenuInflater().inflate(R.menu.notifications, menu);
 //        }
 
-        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))){
+        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
             getMenuInflater().inflate(R.menu.menu_social_media_not_logged, menu);
-        }else{
+        } else {
             getMenuInflater().inflate(R.menu.menu_social_media_logged, menu);
         }
         return true;
@@ -620,21 +812,29 @@ public class MainActivity extends AppCompatActivity {
                 /// Toast.makeText(this, "Facebook", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this, ActivityFacebook.class));
                 //getOpenFacebookIntent(getApplicationContext());
-                startActivityForViewing("https://www.facebook.com/Ideas2Techs/");
+
+                startActivityForViewing(urlFacebook);
+                //startActivityForViewing("https://www.facebook.com/Ideas2Techs/");
                 break;
             case R.id.socialInst:
                 //Toast.makeText(this, "Instagram", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this, ActivityInstagram.class));
-                startActivityForViewing("https://www.instagram.com/ideas2tech/");
+
+                startActivityForViewing(urlInstagram);
+                //startActivityForViewing("https://www.instagram.com/ideas2tech/");
                 break;
             case R.id.socialTwitter:
                 //Toast.makeText(this, "Twitter", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this, ActivityTwitter.class));
-                startActivityForViewing("https://twitter.com/ideas2tech");
+
+                startActivityForViewing(urlTwitter);
+                //startActivityForViewing("https://twitter.com/ideas2tech");
                 break;
             case R.id.socialYoutube:
                 //Toast.makeText(this, "Youtube", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this, ActivityYoutube.class));
+
+                startActivityForViewing(urlYoutube);
                 break;
             case R.id.loginNow:
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -650,6 +850,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startActivityForViewing(String url) {
+
+        if (TextUtils.isEmpty(url.trim())) {
+            new AlertDialog.Builder(this).setPositiveButton("No url supported yet", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            }).show();
+            return;
+        }
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

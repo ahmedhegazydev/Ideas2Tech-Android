@@ -63,14 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:drawablePadding="10dp"
-            android:drawableRight="@drawable/warning"
-            android:gravity="center"
+            android:drawableLeft="@drawable/warning"
+            android:gravity="center_horizontal|right"
             android:padding="30dp"
-            android:text="Data not exist\nNow the plans is empty"
+            android:text="لا يوجد خطط للدفع الان\n يمكنك اضافه واحده عن طريه زر الاضافه العلوي "
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:visibility="visible"
-
             />
 
         <Button
@@ -79,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvDataNotExist"
             android:layout_centerInParent="true"
-            android:text="Retry"
+            android:text="حاول تاني"
             android:textColor="@color/logo"
             android:textStyle="bold"
 

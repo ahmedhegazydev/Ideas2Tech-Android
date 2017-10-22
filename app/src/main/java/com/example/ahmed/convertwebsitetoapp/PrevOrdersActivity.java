@@ -88,7 +88,7 @@ public class PrevOrdersActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        //orderPrevItems.clear();
+                        orderPrevItems.clear();
                         try {
 
                             //JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
@@ -128,7 +128,7 @@ public class PrevOrdersActivity extends AppCompatActivity {
 
                             listViewAdapter = new ListViewAdapter(context, orderPrevItems, hmPlanTitles);
                             lvPrevOrders.setAdapter(listViewAdapter);
-                            listViewAdapter.notifyDataSetChanged();
+                            //listViewAdapter.notifyDataSetChanged();
                             //gettingPlanTitlesByIds(URLs.URL_ORDER_NOW, orderPrevItems);
 
 

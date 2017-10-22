@@ -42,6 +42,7 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 /**
@@ -125,7 +126,7 @@ public class AboutUs extends Fragment {
         //tvAbout.setMovementMethod(new ScrollingMovementMethod());
         webView = (WebView) viewRoot.findViewById(R.id.sv).findViewById(R.id.ll).findViewById(R.id.webViewAbout);
         webView.getSettings().setJavaScriptEnabled(true);
-
+        setRetainInstance(true);
     }
 
     ProgressDialog pdLoading = null;
@@ -152,7 +153,8 @@ public class AboutUs extends Fragment {
                             JSONObject jsonObject = new JSONObject(response.toString());
                             Log.e("aboutUs12812", jsonObject.toString());
                             JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                            String data = jsonObject1.getString("abdescen");
+                            String dataEn = jsonObject1.getString("abdescen");
+                            String dataAr = jsonObject1.getString("abdescar");
                             //Log.e("data", data);
                             //data = TextUtils.htmlEncode(data);
 
@@ -173,7 +175,12 @@ public class AboutUs extends Fragment {
                             //webView.loadDataWithBaseURL("", data, "text/html", "UTF-8", "");
 
 
-                            webView.loadData(URLEncoder.encode(data).replaceAll("\\+", " "), "text/html", Xml.Encoding.UTF_8.toString());
+
+                            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+                                webView.loadData(URLEncoder.encode(dataEn).replaceAll("\\+", " "), "text/html", Xml.Encoding.UTF_8.toString());
+                            }else{
+                                webView.loadData(URLEncoder.encode(dataAr).replaceAll("\\+", " "), "text/html", Xml.Encoding.UTF_8.toString());
+                            }
 
                             pdLoading.dismiss();
                         } catch (JSONException e) {

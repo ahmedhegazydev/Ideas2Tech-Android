@@ -92,6 +92,7 @@ public class FAQs extends Fragment {
 //                        Log.e("fagRes", response.toString());
 //                        Log.e("oooohh", modifyJson(response.toString()));
 
+                        faqItems.clear();
                         pdFetchingFaqs.dismiss();
 
                         try {
@@ -122,14 +123,14 @@ public class FAQs extends Fragment {
 
 //
                             listAdapter = new ListAdapter(getContext(), faqItems);
-                            listAdapter.notifyDataSetChanged();
+                            //listAdapter.notifyDataSetChanged();
                             listViewFags.setAdapter(listAdapter);
 
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
 
-                        Log.e("resFaqs", faqItems.toString());
+                        //Log.e("resFaqs", faqItems.toString());
 
 
                     }
@@ -301,7 +302,9 @@ public class FAQs extends Fragment {
             //lan = Locale.getDefault().getDisplayLanguage();
             lan = Locale.getDefault().getLanguage();
             //Log.e("lan364", lan);
-            if (lan.equalsIgnoreCase("en")) {
+
+
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")) {
                 tvQuestion.setText(faqItem.getQuestionEn());
                 tvAnswer.setText(faqItem.getAnswerEn());
             } else {

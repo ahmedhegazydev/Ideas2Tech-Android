@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.example.ahmed.convertwebsitetoapp.chatting.*;
 import com.example.ahmed.convertwebsitetoapp.model.ServiceItem;
 
+import java.util.Locale;
+
 public class DetailsActivtyServ extends AppCompatActivity {
 
     ImageView imageView = null;
@@ -45,13 +47,19 @@ public class DetailsActivtyServ extends AppCompatActivity {
         //textView = (TextView) findViewById(R.id.tvImageDesc);
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadDataWithBaseURL("", serviceItem.getSerDescEn(), "text/html", "UTF-8", "");
+
 
         Glide.with(getApplicationContext()).load(serviceItem.getSerImageUrl()).into(imageView);
         //textView.setText(serviceItem.getSerDescEn());
 
+        if (Locale.getDefault().getLanguage() == "en") {
+            webView.loadDataWithBaseURL("", serviceItem.getSerDescEn(), "text/html", "UTF-8", "");
+            getSupportActionBar().setTitle(serviceItem.getSerTitleEn());
+        } else {
+            webView.loadDataWithBaseURL("", serviceItem.getSerDescAr(), "text/html", "UTF-8", "");
+            getSupportActionBar().setTitle(serviceItem.getSerTitleAr());
 
-        getSupportActionBar().setTitle(serviceItem.getSerTitleEn());
+        }
 
 
     }
@@ -85,13 +93,13 @@ public class DetailsActivtyServ extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
-                case android.R.id.home:
-                    finish();
-                    startActivity(new Intent(this, com.example.ahmed.convertwebsitetoapp.chatting.MainActivity.class));
-                    overridePendingTransitionExit();
-                    break;
+            case android.R.id.home:
+                finish();
+                startActivity(new Intent(this, com.example.ahmed.convertwebsitetoapp.chatting.MainActivity.class));
+                overridePendingTransitionExit();
+                break;
         }
 
         return true;

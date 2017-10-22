@@ -60,6 +60,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 /**
@@ -85,6 +86,8 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.my_projects, container, false);
+
+        setRetainInstance(true);
 
         lvServices = (ListView) viewRoot.findViewById(R.id.lvServices);
         listAdapter = new ListAdapter(getContext(), serviceItems);
@@ -186,6 +189,7 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
+                        serviceItems.clear();
                         try {
                             JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
                             Log.e("res33423", jsonObject.toString());
@@ -210,7 +214,7 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
                             }
                             listAdapter = new ListAdapter(getContext(), serviceItems);
                             lvServices.setAdapter(listAdapter);
-                            listAdapter.notifyDataSetChanged();
+                            //listAdapter.notifyDataSetChanged();
 //
 
                         } catch (JSONException e) {
@@ -295,7 +299,15 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
             imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
             ImageView imageView1 = (ImageView) imageView.findViewById(R.id.iv);
             TextView textView = (TextView) imageView.findViewById(R.id.tvCategory);
-            textView.setText(serviceItem.getCategoryEn());
+
+
+
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+                textView.setText(serviceItem.getCategoryEn());
+            }else{
+                textView.setText(serviceItem.getCategoryAr());
+            }
+
 
 //            ImageView imageView = new ImageView(context);
 //            imageView.setLayoutParams(new LinearLayout.LayoutParams(200, 300));

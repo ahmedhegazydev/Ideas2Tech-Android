@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -27,23 +27,24 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-//import com.example.ahmed.convertwebsitetoapp.ActivityMain;
 import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
-import com.example.ahmed.convertwebsitetoapp.adapters.ViewPagerAdapter;
 import com.example.ahmed.convertwebsitetoapp.chatting.MainActivity;
-import com.example.ahmed.convertwebsitetoapp.model.Drawer;
 import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
-import com.zendesk.sdk.model.access.AnonymousIdentity;
-import com.zendesk.sdk.model.access.Identity;
-import com.zendesk.sdk.network.impl.ZendeskConfig;
-import com.zendesk.sdk.support.SupportActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.session.Configuration;
+import co.chatsdk.firebase.FirebaseModule;
+import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
+import co.chatsdk.ui.InterfaceManager;
+
+//import com.example.ahmed.convertwebsitetoapp.ActivityMain;
 
 
 /**
@@ -89,29 +90,33 @@ public class HomePage extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.home_page, container, false);
 
+        setRetainInstance(true);
 
         linearLayout = (LinearLayout) viewRoot.findViewById(R.id.rlFrame);
         frameLayout = (FrameLayout) linearLayout.findViewById(R.id.frame);
         btnBackToHome = (Button) linearLayout.findViewById(R.id.bacToHome);
         btnBackToHome.setOnClickListener(this);
 
+//
+//        ZendeskConfig.INSTANCE.init(getActivity(), "https://omniwear.zendesk.com",
+//                "23705744c16d8e0698b45920f18aa26e43d7",
+//                "mobile_sdk_client_b7fd695c0e9a6056");
+//        Identity identity = new AnonymousIdentity.Builder().build();
+//        ZendeskConfig.INSTANCE.setIdentity(identity);
 
-        ZendeskConfig.INSTANCE.init(getActivity(), "https://omniwear.zendesk.com",
-                "23705744c16d8e0698b45920f18aa26e43d7",
-                "mobile_sdk_client_b7fd695c0e9a6056");
-        Identity identity = new AnonymousIdentity.Builder().build();
-        ZendeskConfig.INSTANCE.setIdentity(identity);
 
+        init();
         fabChatting = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
         //setAlphaAnimation(fabChatting);
         fabChatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SupportActivity.Builder().show(getActivity());
+                //new SupportActivity.Builder().show(getActivity());
+                InterfaceManager.shared().a.startLoginActivity(getActivity(), true);
+                Toast.makeText(context, "Fab clicked", Toast.LENGTH_SHORT).show();
             }
         });
-
-        init();
+        initChatSdk();
 
 
 //        listFragments.add(new FragmentContactsHotlist());
@@ -147,6 +152,30 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
     }
 
+    private void initChatSdk() {
+        //Enable multi-dexing
+        MultiDex.install(getActivity());
+        Context context = getActivity();
+        // Create a new configuration
+        Configuration.Builder builder = new Configuration.Builder(context);
+//        builder.firebase(getActivity().getResources().getString(R.string.firebase_url),
+//                getActivity().getResources().getString(R.string.firebase_root_path),
+//                getActivity().getResources().getString(R.string.firebase_storage_url),
+//                "CloudMessaging Api Key");
+        // Perform any configuration steps
+        // Initialize the Chat SDK
+        ChatSDK.initialize(builder.build());
+        // Activate the Firebase module
+        FirebaseModule.activate(context);
+        // File storage is needed for profile image upload and image messages
+        FirebaseFileStorageModule.activate();
+        // Activate any other modules you need.
+        // ...
+
+
+    }
+
+
     private void init() {
         tvContactUs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.contactus);
         tvOurProjects = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.projects);
@@ -166,7 +195,6 @@ public class HomePage extends Fragment implements View.OnClickListener {
         tvFaqs.setOnClickListener(this);
         tvPrevOrders.setOnClickListener(this);
         tvAboutUs.setOnClickListener(this);
-
 
 
         userSessionManager = new UserSessionManager(getActivity());
@@ -271,26 +299,26 @@ public class HomePage extends Fragment implements View.OnClickListener {
             titleOk = "اه عايز أخرج";
 
         }
-//
-//        new AlertDialog.Builder(context).setMessage(message)
-//                .setTitle(title)
-//                .setPositiveButton(titleOk, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // Clear the session data
-//                        // This will clear all session data and
-//                        // redirect user to LoginActivity
-//                        new UserSessionManager(getActivity()).logoutUser();
-//
-//                    }
-//                })
-//                .setNegativeButton(titleCancel, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                })
-//                .show();
+
+        new AlertDialog.Builder(context).setMessage(message)
+                .setTitle(title)
+                .setPositiveButton(titleOk, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Clear the session data
+                        // This will clear all session data and
+                        // redirect user to LoginActivity
+                        new UserSessionManager(getActivity()).logoutUser();
+
+                    }
+                })
+                .setNegativeButton(titleCancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
 
 
     }

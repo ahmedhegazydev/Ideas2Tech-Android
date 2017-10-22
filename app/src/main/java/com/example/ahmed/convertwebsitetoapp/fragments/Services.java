@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -81,7 +82,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.services, container, false);
         ///fab = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
-       // setAlphaAnimation(fab);
+        // setAlphaAnimation(fab);
 
 //        services = (RecyclerView) view.findViewById(R.id.RecyclerView);
 //        services.setHasFixedSize(true);
@@ -100,11 +101,30 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
 //        String[] titlesList = getActivity().getResources().getStringArray(R.array.titles);
 //        services.setAdapter(new ImagesAdapter(uriList, titlesList));
 
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
         init();
         fetchData(URLs.URL_SERVICES);
 
         return viewRoot;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
 
     private void init() {
         lvServices = (ListView) viewRoot.findViewById(R.id.lvServices);
@@ -131,6 +151,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
+                        serviceItems.clear();
                         try {
 
                             JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
@@ -154,7 +175,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
                             }
                             listAdapter = new ListAdapter(getContext(), serviceItems);
                             lvServices.setAdapter(listAdapter);
-                            listAdapter.notifyDataSetChanged();
+                            //listAdapter.notifyDataSetChanged();
 //
 
                         } catch (JSONException e) {
@@ -204,7 +225,6 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
 
     }
 
-
     public class ListAdapter extends BaseAdapter {
 
         Context context = null;
@@ -237,13 +257,10 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
             ServiceItem serviceItem = getItem(i);
             View view1 = null;
             String lan = "";
+//            lan = Locale.getDefault().getLanguage();
             lan = Locale.getDefault().getDisplayLanguage();
-//            if (lan == "en") {
-//                view1 = LayoutInflater.from(getActivity()).inflate(R.layout.img_service_item, null);
-//            }else{
-//                //ar
-//                view1 = LayoutInflater.from(getActivity()).inflate(R.layout.img_service_item, null);
-//            }
+
+
             view1 = LayoutInflater.from(getActivity()).inflate(R.layout.img_service_item, null);
             view1.setAlpha(.9f);
             ImageView imageView1 = (ImageView) view1.findViewById(R.id.iv);
@@ -253,12 +270,20 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
 //            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(context).load(serviceItem.getSerImageUrl()).into(imageView1);
             TextView tvImageTitle = (TextView) view1.findViewById(R.id.tvImageTitle);
-            tvImageTitle.setText(serviceItem.getSerTitleEn());
+
+
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+                tvImageTitle.setText(serviceItem.getSerTitleEn());
+
+            }else{
+                tvImageTitle.setText(serviceItem.getSerTitleAr());
+
+            }
+            //Log.e("lan20130074", lan);
 
             return view1;
         }
     }
-
 
     public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.MyViewHolder> {
 

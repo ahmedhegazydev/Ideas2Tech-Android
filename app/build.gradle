@@ -190,10 +190,12 @@ dependencies {
     compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
+    compile project(path: ':chat_sdk_ui')
+    compile project(path: ':chat_sdk_firebase_push')
+    compile project(path: ':chat_sdk_firebase_file_storage')
+
+
+
 }
-
-
-
-
-
 apply plugin: 'com.google.gms.google-services'

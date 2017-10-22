@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/tools">
+
+    <string name="firebase_url">https://whatsapp-38bc2.firebaseio.com/</string>
+    <string name="firebase_root_path">whatsapp-38bc2</string>
+    <string name="firebase_storage_url">gs://whatsapp-38bc2.appspot.com/</string>
+    <string name="google_maps_api_key">AIzaSyA6b7Vg8CsdvInmgJsMqXTccB9yjAm2iAU</string>
+
+
+</resources>

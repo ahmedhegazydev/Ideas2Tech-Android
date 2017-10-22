@@ -119,6 +119,7 @@ public class ContactUs extends Fragment {
         context = getContext();
         setHasOptionsMenu(true);
         setMenuVisibility(true);
+        setRetainInstance(true);
 
 
         userId = new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID);

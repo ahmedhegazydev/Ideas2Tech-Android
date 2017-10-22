@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide;
 import com.example.ahmed.convertwebsitetoapp.model.ProjectItem;
 import com.example.ahmed.convertwebsitetoapp.model.ServiceItem;
 
+import java.util.Locale;
+
 public class DetailsActivtyProject extends AppCompatActivity {
 
     ImageView imageView = null;
@@ -41,12 +43,20 @@ public class DetailsActivtyProject extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.iv);
         textView = (TextView) findViewById(R.id.tvImageDesc);
+        tvCat = (TextView) findViewById(R.id.tvCategory);
 
         Glide.with(getApplicationContext()).load(serviceItem.getProjectImgUrl()).into(imageView);
-        textView.setText(serviceItem.getDescEn());
-        getSupportActionBar().setTitle(serviceItem.getTitleEn());
-        tvCat = (TextView) findViewById(R.id.tvCategory);
-        tvCat.setText(serviceItem.getCategoryEn());
+        if (Locale.getDefault().getLanguage() == "en"){
+            textView.setText(serviceItem.getDescEn());
+            getSupportActionBar().setTitle(serviceItem.getTitleEn());
+            tvCat.setText(serviceItem.getCategoryEn());
+        }else {
+            textView.setText(serviceItem.getDescAr());
+            getSupportActionBar().setTitle(serviceItem.getTitleAr());
+            tvCat.setText(serviceItem.getCategoryAr());
+        }
+
+
 
     }
 
