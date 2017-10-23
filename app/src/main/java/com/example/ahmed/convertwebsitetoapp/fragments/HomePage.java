@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -196,6 +197,12 @@ public class HomePage extends Fragment implements View.OnClickListener {
         tvPrevOrders.setOnClickListener(this);
         tvAboutUs.setOnClickListener(this);
 
+
+        if (TextUtils.isEmpty(new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+            tvPrevOrders.setVisibility(TextView.GONE);
+        } else {
+            tvPrevOrders.setVisibility(TextView.VISIBLE);
+        }
 
         userSessionManager = new UserSessionManager(getActivity());
 

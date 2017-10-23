@@ -2,7 +2,7 @@ package com.example.ahmed.convertwebsitetoapp.chatting;
 
 public class URLs {
 
-    //final static String LINK = "https://ideas2tech.000webhostapp.com/ideas2tech";
+    //    final static String LINK = "https://ideas2tech.000webhostapp.com/ideas2tech";
     final static String LINK = "http://ideas2tech.net";
 
 

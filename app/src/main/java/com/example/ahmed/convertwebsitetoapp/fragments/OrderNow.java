@@ -148,12 +148,12 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
         mAnimationSet.start();
     }
 
-    RelativeLayout rlDataNotExist = null;
+    RelativeLayout rlDataNotExist = null, rlMainOrderNow = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.order_now, container, false);
-
+        rlMainOrderNow = (RelativeLayout) viewRoot.findViewById(R.id.rlMainOrderNow);
 
         init();
         setRetainInstance(true);
@@ -253,7 +253,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast.makeText(getContext(), "onErrorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+                //Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/rlMainOrderNow, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
             }
         });
         // Add the request to the RequestQueue.

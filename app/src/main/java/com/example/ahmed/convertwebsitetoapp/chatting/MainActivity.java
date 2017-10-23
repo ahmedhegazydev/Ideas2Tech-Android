@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Session class instance
         session = new UserSessionManager(getApplicationContext());
+        //session.createUserLoginSession("", "", "20130074");
         // Check user login (this is the important point)
         // If User is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
@@ -170,13 +171,14 @@ public class MainActivity extends AppCompatActivity {
             navigationView.inflateMenu(R.menu.activity_main_drawer_not_logged);
             // load toolbar titles from string resources
             activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_not_logged);
+            // Toast.makeText(this, "not logged titles", Toast.LENGTH_SHORT).show();
 
         } else {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
-            // load toolbar titles from string resources
+//            // load toolbar titles from string resources
             activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_logged);
-
+            //Toast.makeText(this, "logged titles", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -223,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
         //setAlphaAnimation(fabChatting);
 
         // load nav menu header data
-        loadNavHeader();
+        //loadNavHeader();
+
 
         // initializing navigation menu
         setUpNavigationView();
@@ -392,7 +395,55 @@ public class MainActivity extends AppCompatActivity {
      */
     public void loadHomeFragment() {
 
+        //not logged in
         if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+            //Toast.makeText(MainActivity.this, "not logged LoadHomeFragment", Toast.LENGTH_SHORT).show();
+
+            switch (session.getLastPressedFragment()) {
+                case TAG_OUR_PROJECTS:
+                    navItemIndex = 1;
+                    CURRENT_TAG = TAG_OUR_PROJECTS;
+                    goToFragment(new OurProjects());
+                    Log.e("resDaddy", "ourProject");
+                    break;
+                case TAG_ABOUT_US:
+                    navItemIndex = 4;
+                    CURRENT_TAG = TAG_ABOUT_US;
+                    goToFragment(new AboutUs());
+                    Log.e("resDaddy", "about us");
+                    break;
+                case TAG_CONTACT_US:
+                    navItemIndex = 5;
+                    CURRENT_TAG = TAG_CONTACT_US;
+                    goToFragment(new ContactUs());
+                    Log.e("resDaddy", "contact us");
+                    break;
+                case TAG_FAQS:
+                    navItemIndex = 6;
+                    CURRENT_TAG = TAG_FAQS;
+                    goToFragment(new FAQs());
+                    Log.e("resDaddy", "FAQs");
+                    break;
+                case TAG_SERVICES:
+                    navItemIndex = 2;
+                    CURRENT_TAG = TAG_SERVICES;
+                    goToFragment(new Services());
+                    Log.e("resDaddy", "Services");
+                    break;
+                case TAG_ORDER_NOW:
+                    navItemIndex = 3;
+                    CURRENT_TAG = TAG_ORDER_NOW;
+                    goToFragment(new OrderNow());
+                    Log.e("resDaddy", "Order Now");
+                    break;
+                default:
+                    navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME_PAGE;
+                    goToFragment(new HomePage());
+                    Log.e("resDaddy", "Home Page");
+                    break;
+            }
+        } else {
             switch (session.getLastPressedFragment()) {
                 case TAG_OUR_PROJECTS:
                     navItemIndex = 1;
@@ -411,47 +462,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case TAG_FAQS:
                     navItemIndex = 7;
-                    CURRENT_TAG = TAG_FAQS;
-                    goToFragment(new FAQs());
-                    break;
-                case TAG_ORDER_NOW:
-                    navItemIndex = 4;
-                    CURRENT_TAG = TAG_ORDER_NOW;
-                    goToFragment(new OrderNow());
-                    break;
-                case TAG_PREV_ORDERS:
-
-                    break;
-                case TAG_SERVICES:
-                    navItemIndex = 2;
-                    CURRENT_TAG = TAG_SERVICES;
-                    goToFragment(new Services());
-                    break;
-                default:
-                    navItemIndex = 0;
-                    CURRENT_TAG = TAG_HOME_PAGE;
-                    goToFragment(new HomePage());
-                    break;
-            }
-        } else {
-            switch (session.getLastPressedFragment()) {
-                case TAG_OUR_PROJECTS:
-                    navItemIndex = 1;
-                    CURRENT_TAG = TAG_OUR_PROJECTS;
-                    goToFragment(new OurProjects());
-                    break;
-                case TAG_ABOUT_US:
-                    navItemIndex = 4;
-                    CURRENT_TAG = TAG_ABOUT_US;
-                    goToFragment(new AboutUs());
-                    break;
-                case TAG_CONTACT_US:
-                    navItemIndex = 5;
-                    CURRENT_TAG = TAG_CONTACT_US;
-                    goToFragment(new ContactUs());
-                    break;
-                case TAG_FAQS:
-                    navItemIndex = 6;
                     CURRENT_TAG = TAG_FAQS;
                     goToFragment(new FAQs());
                     break;
@@ -485,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
-
             // show or hide the fab button
             //toggleFab();
             return;
@@ -514,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
+                //Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -614,73 +623,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 //Check to see which item was being clicked and perform appropriate action
-                if (!TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+                if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+                    // Toast.makeText(MainActivity.this, "not logged  onNavigationItemSelected", Toast.LENGTH_SHORT).show();
                     switch (menuItem.getItemId()) {
                         //Replacing the main content with ContentFragment Which is our Inbox View;
                         case R.id.nav_home_page:
                             navItemIndex = 0;
                             CURRENT_TAG = TAG_HOME_PAGE;
                             session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            loadHomeFragment();
                             break;
                         case R.id.nav_our_projects:
                             navItemIndex = 1;
                             CURRENT_TAG = TAG_OUR_PROJECTS;
                             session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
+                            loadHomeFragment();
                             break;
                         case R.id.nav_services:
                             navItemIndex = 2;
                             CURRENT_TAG = TAG_SERVICES;
                             session.postLastPressedFragment(MainActivity.TAG_SERVICES);
-                            break;
-                        case R.id.nav_prev_services:
-                            navItemIndex = 3;
-                            CURRENT_TAG = TAG_PREV_ORDERS;
-                            startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
-                            break;
-                        case R.id.nav_order_now:
-                            navItemIndex = 4;
-                            CURRENT_TAG = TAG_ORDER_NOW;
-                            session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
-                            break;
-                        case R.id.nav_about_us:
-                            navItemIndex = 5;
-                            CURRENT_TAG = TAG_ABOUT_US;
-                            session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
-                            break;
-                        case R.id.nav_contact_us:
-                            navItemIndex = 6;
-                            CURRENT_TAG = TAG_CONTACT_US;
-                            session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
-                            break;
-                        case R.id.nav_faqs:
-                            navItemIndex = 7;
-                            CURRENT_TAG = TAG_FAQS;
-                            session.postLastPressedFragment(MainActivity.TAG_FAQS);
-                            break;
-                        case R.id.nav_sign_out:
-                            //navItemIndex = 7;
-                            signOut(MainActivity.this);
-                            break;
-                        default:
-                            navItemIndex = 0;
-                    }
-                } else {
-                    switch (menuItem.getItemId()) {
-                        //Replacing the main content with ContentFragment Which is our Inbox View;
-                        case R.id.nav_home_page:
-                            navItemIndex = 0;
-                            CURRENT_TAG = TAG_HOME_PAGE;
-                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
-                            break;
-                        case R.id.nav_our_projects:
-                            navItemIndex = 1;
-                            CURRENT_TAG = TAG_OUR_PROJECTS;
-                            session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
-                            break;
-                        case R.id.nav_services:
-                            navItemIndex = 2;
-                            CURRENT_TAG = TAG_SERVICES;
-                            session.postLastPressedFragment(MainActivity.TAG_SERVICES);
+                            loadHomeFragment();
                             break;
 //                        case R.id.nav_prev_services:
 //                            navItemIndex = 3;
@@ -691,21 +654,26 @@ public class MainActivity extends AppCompatActivity {
                             navItemIndex = 3;
                             CURRENT_TAG = TAG_ORDER_NOW;
                             session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
+                            loadHomeFragment();
+                            //Toast.makeText(MainActivity.this, "order now", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.nav_about_us:
                             navItemIndex = 4;
                             CURRENT_TAG = TAG_ABOUT_US;
                             session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
+                            loadHomeFragment();
                             break;
                         case R.id.nav_contact_us:
                             navItemIndex = 5;
                             CURRENT_TAG = TAG_CONTACT_US;
                             session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
+                            loadHomeFragment();
                             break;
                         case R.id.nav_faqs:
                             navItemIndex = 6;
                             CURRENT_TAG = TAG_FAQS;
                             session.postLastPressedFragment(MainActivity.TAG_FAQS);
+                            loadHomeFragment();
                             break;
                         case R.id.nav_sign_out:
                             //navItemIndex = 7;
@@ -713,6 +681,71 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         default:
                             navItemIndex = 0;
+                    }
+                } else {
+                    switch (menuItem.getItemId()) {
+//                    Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.nav_home_page:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_HOME_PAGE;
+                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_our_projects:
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_OUR_PROJECTS;
+                            session.postLastPressedFragment(MainActivity.TAG_OUR_PROJECTS);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_services:
+                            navItemIndex = 2;
+                            CURRENT_TAG = TAG_SERVICES;
+                            session.postLastPressedFragment(MainActivity.TAG_SERVICES);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_prev_services:
+//                            navItemIndex = 3;
+//                            CURRENT_TAG = TAG_PREV_ORDERS;
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_HOME_PAGE;
+                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            startActivity(new Intent(MainActivity.this, PrevOrdersActivity.class));
+//                            break;
+                        case R.id.nav_order_now:
+                            navItemIndex = 4;
+                            CURRENT_TAG = TAG_ORDER_NOW;
+                            session.postLastPressedFragment(MainActivity.TAG_ORDER_NOW);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_about_us:
+                            navItemIndex = 5;
+                            CURRENT_TAG = TAG_ABOUT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_ABOUT_US);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_contact_us:
+                            navItemIndex = 6;
+                            CURRENT_TAG = TAG_CONTACT_US;
+                            session.postLastPressedFragment(MainActivity.TAG_CONTACT_US);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_faqs:
+                            navItemIndex = 7;
+                            CURRENT_TAG = TAG_FAQS;
+                            session.postLastPressedFragment(MainActivity.TAG_FAQS);
+                            loadHomeFragment();
+                            break;
+                        case R.id.nav_sign_out:
+                            //navItemIndex = 7;
+                            signOut(MainActivity.this);
+                            break;
+                        default:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_HOME_PAGE;
+                            session.postLastPressedFragment(MainActivity.TAG_HOME_PAGE);
+                            loadHomeFragment();
+                            break;
+
                     }
                 }
 
@@ -724,7 +757,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 menuItem.setChecked(true);
 
-                loadHomeFragment();
 
                 return true;
             }
