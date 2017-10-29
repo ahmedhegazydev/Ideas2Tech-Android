@@ -25,19 +25,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
-                android:drawableLeft="@drawable/left_arrow"
-                android:text="خدماتنا"
                 android:layout_marginTop="5dp"
                 android:alpha=".8"
                 android:background="@color/gray2"
+                android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
+                android:text="خدماتنا"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
                 />
 
@@ -51,6 +51,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -59,7 +60,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
                 />
 
             <TextView
@@ -72,6 +72,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -80,7 +81,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
                 />
 
@@ -94,6 +94,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -102,7 +103,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
                 />
 
@@ -116,6 +116,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -124,7 +125,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
 
                 />
@@ -139,6 +139,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -147,7 +148,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
 
                 />
@@ -162,6 +162,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -170,7 +171,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
 
                 />
 
@@ -184,6 +184,7 @@
                 android:alpha=".8"
                 android:background="@color/gray2"
                 android:drawableLeft="@drawable/left_arrow"
+                android:gravity="center"
                 android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
@@ -192,7 +193,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
+                android:visibility="gone"
 
                 />
 

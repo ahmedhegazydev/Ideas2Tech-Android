@@ -17,7 +17,6 @@ import android.support.design.widget.Snackbar;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.os.UserManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -55,7 +54,6 @@ import com.sendbird.android.SendBirdException;
 import com.zendesk.sdk.model.access.AnonymousIdentity;
 import com.zendesk.sdk.model.access.Identity;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
-import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,11 +85,6 @@ public class MainActivity extends AppCompatActivity {
     // index to identify current nav menu item
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_HOME_PAGE;
-    // Session Manager Class
-    UserSessionManager session;
-    SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor = null;
-    int i = 0;
     public NavigationView navigationView;
     public DrawerLayout drawer;
     public View navHeader;
@@ -104,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     public boolean shouldLoadHomeFragOnBackPress = true;
     public Handler mHandler;
+    // Session Manager Class
+    UserSessionManager session;
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor = null;
+    int i = 0;
+    String urlFacebook = "", urlInstagram = "", urlYoutube = "", urlTwitter = "", urlGooglePlus = "", urlLikedin = "";
 
     public static void setAlphaAnimation(View v) {
         ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
@@ -203,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
         //SendBird.init(getResources().getString(R.string.APP_ID), this);
         //initChatSdk();
+        initChatSdk2();
         fabChatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,7 +212,10 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
 //                startActivity(intent);
 //                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                startActivity(new Intent(MainActivity.this, ZopimChatActivity.class));
+                //startActivity(new Intent(MainActivity.this, ZopimChatActivity.class));
+
+                InterfaceManager.shared().a.startLoginActivity(MainActivity.this, true);
+                Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
 
                 //startChatting();
 
@@ -242,6 +245,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initChatSdk2() {
+        //Enable multi-dexing
+        MultiDex.install(getApplicationContext());
+        Context context = getApplicationContext();
+        // Create a new configuration
+        Configuration.Builder builder = new Configuration.Builder(context);
+//        builder.firebase(getActivity().getResources().getString(R.string.firebase_url),
+//                getActivity().getResources().getString(R.string.firebase_root_path),
+//                getActivity().getResources().getString(R.string.firebase_storage_url),
+//                "CloudMessaging Api Key");
+        // Perform any configuration steps
+        // Initialize the Chat SDK
+        ChatSDK.initialize(builder.build());
+        // Activate the Firebase module
+        FirebaseModule.activate(context);
+        // File storage is needed for profile image upload and image messages
+        FirebaseFileStorageModule.activate();
+        // Activate any other modules you need.
+        // ...
+
+
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
 
     private void initChatSdk() {
         //Enable multi-dexing
@@ -265,9 +294,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-    String urlFacebook = "", urlInstagram = "", urlYoutube = "", urlTwitter = "", urlGooglePlus = "", urlLikedin = "";
 
     private void getSocialMedia(String urlSocialMedia) {
 
@@ -675,9 +701,9 @@ public class MainActivity extends AppCompatActivity {
                             session.postLastPressedFragment(MainActivity.TAG_FAQS);
                             loadHomeFragment();
                             break;
-                        case R.id.nav_sign_out:
-                            //navItemIndex = 7;
-                            signOut(MainActivity.this);
+                        case R.id.nav_login:
+//                            Toast.makeText(MainActivity.this, "Not logged in", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class).putExtra("login", "login"));
                             break;
                         default:
                             navItemIndex = 0;
@@ -739,6 +765,7 @@ public class MainActivity extends AppCompatActivity {
                             //navItemIndex = 7;
                             signOut(MainActivity.this);
                             break;
+
                         default:
                             navItemIndex = 0;
                             CURRENT_TAG = TAG_HOME_PAGE;
@@ -876,6 +903,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+
 
         }
         return super.onOptionsItemSelected(item);

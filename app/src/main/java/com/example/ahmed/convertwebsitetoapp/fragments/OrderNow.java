@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,7 +45,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.AddNewOrderActivity;
 import com.example.ahmed.convertwebsitetoapp.OrderMoreActvity;
 import com.example.ahmed.convertwebsitetoapp.R;
-//import com.example.ahmed.convertwebsitetoapp.activities.PayFortFactory;
 import com.example.ahmed.convertwebsitetoapp.chatting.LoginActivity;
 import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
 import com.example.ahmed.convertwebsitetoapp.model.PlanItem;
@@ -54,7 +55,6 @@ import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
 import com.payu.india.Payu.PayuConstants;
-//import com.payu.payuui.Activity.PayUBaseActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +74,9 @@ import java.util.Iterator;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+//import com.example.ahmed.convertwebsitetoapp.activities.PayFortFactory;
+//import com.payu.payuui.Activity.PayUBaseActivity;
 
 //import com.example.ahmed.convertwebsitetoapp.RecordActivity;
 
@@ -119,6 +122,7 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
     ArrayList<PlanItem> selectedPlanItem = new ArrayList<PlanItem>();
     TextView tvDataNotExist = null;
     ImageView ivAddNewOrder = null;
+    RelativeLayout rlDataNotExist = null, rlMainOrderNow = null;
     //////////////////////////
     private String merchantKey, userCredentials;
     // These will hold all the payment parameters
@@ -148,8 +152,6 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
         mAnimationSet.start();
     }
 
-    RelativeLayout rlDataNotExist = null, rlMainOrderNow = null;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.order_now, container, false);
@@ -158,6 +160,10 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
         init();
         setRetainInstance(true);
         fetchingData(URLs.URL_ORDER_NOW);
+
+
+        ((com.example.ahmed.convertwebsitetoapp.chatting.MainActivity) getActivity())
+                .setActionBarTitle(getActivity().getResources().getString(R.string.nav_order_now));
 
 
         ///preparePayment();
@@ -253,7 +259,8 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast.makeText(getContext(), "onErrorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                //Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/rlMainOrderNow, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/rlMainOrderNow, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
             }
         });
         // Add the request to the RequestQueue.
@@ -869,7 +876,14 @@ public class OrderNow extends Fragment implements OneClickPaymentListener, Image
     public void onClick(View view) {
 
         if (view.equals(ivAddNewOrder)) {
-            startActivity(new Intent(OrderNow.this.getActivity(), AddNewOrderActivity.class));
+            if (TextUtils.isEmpty(new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+                startActivity(new Intent(OrderNow.this.getActivity(), LoginActivity.class).putExtra("login", "login"));
+                Toast.makeText(context, "Not logged in", Toast.LENGTH_SHORT).show();
+
+            } else {
+                startActivity(new Intent(OrderNow.this.getActivity(), AddNewOrderActivity.class));
+                Toast.makeText(context, "Logged in", Toast.LENGTH_SHORT).show();
+            }
         }
 
 

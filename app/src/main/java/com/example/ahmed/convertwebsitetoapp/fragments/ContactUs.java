@@ -122,6 +122,10 @@ public class ContactUs extends Fragment {
         setRetainInstance(true);
 
 
+        ((com.example.ahmed.convertwebsitetoapp.chatting.MainActivity) getActivity())
+                .setActionBarTitle(getActivity().getResources().getString(R.string.nav_contact_us));
+
+
         userId = new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID);
         if (TextUtils.isEmpty(userId)) {
             viewRoot = inflater.inflate(R.layout.contact_main_notloggedin, container, false);

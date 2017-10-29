@@ -40,7 +40,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.model.Person;
-import com.example.ahmed.convertwebsitetoapp.sessions.SessionManager;
 import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 
 import org.apache.http.HttpResponse;
@@ -232,13 +231,16 @@ public class LoginActivity extends AppCompatActivity {
 //                "123"
 //        );
 
-
-        if (session.isSkipped()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-
+        if (getIntent().hasExtra("login")) {
+            //Toast.makeText(this, getIntent().getStringExtra("login"), Toast.LENGTH_SHORT).show();
         } else {
+            if (session.isSkipped() /*&& !getIntent().getStringExtra("login").toString().equalsIgnoreCase("login")*/) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
 
+            } else {
+
+            }
         }
 
 

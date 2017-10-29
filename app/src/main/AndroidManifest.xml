@@ -54,7 +54,10 @@
         </activity>
         <activity
             android:name=".chatting.MainActivity"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+
+            >
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 

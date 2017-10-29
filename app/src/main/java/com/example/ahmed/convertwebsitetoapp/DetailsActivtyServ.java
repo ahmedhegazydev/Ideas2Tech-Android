@@ -1,16 +1,16 @@
 package com.example.ahmed.convertwebsitetoapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ahmed.convertwebsitetoapp.chatting.*;
 import com.example.ahmed.convertwebsitetoapp.model.ServiceItem;
 
 import java.util.Locale;
@@ -20,6 +20,7 @@ public class DetailsActivtyServ extends AppCompatActivity {
     ImageView imageView = null;
     TextView textView = null;
     WebView webView = null;
+    TextView tvDetailsServ = null;
 
 
     @Override
@@ -39,24 +40,39 @@ public class DetailsActivtyServ extends AppCompatActivity {
 //        String imageDesc = intent.getStringExtra("imgDesc");
 //        String imageTitle = intent.getStringExtra("imgTitle");
 
+        tvDetailsServ = (TextView) findViewById(R.id.tvDetailsServ);
+
+
 //        ServiceItem serviceItem = getIntent().getParcelableExtra("item");
         ServiceItem serviceItem = (ServiceItem) getIntent().getSerializableExtra("item");
 
 
         imageView = (ImageView) findViewById(R.id.iv);
         //textView = (TextView) findViewById(R.id.tvImageDesc);
-        webView = (WebView) findViewById(R.id.webView);
-        webView.getSettings().setJavaScriptEnabled(true);
+//        webView = (WebView) findViewById(R.id.webView);
+//        webView.getSettings().setJavaScriptEnabled(true);
 
 
         Glide.with(getApplicationContext()).load(serviceItem.getSerImageUrl()).into(imageView);
         //textView.setText(serviceItem.getSerDescEn());
 
-        if (Locale.getDefault().getLanguage() == "en") {
-            webView.loadDataWithBaseURL("", serviceItem.getSerDescEn(), "text/html", "UTF-8", "");
+        if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
+            //webView.loadDataWithBaseURL("", serviceItem.getSerDescEn(), "text/html", "UTF-8", "");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                tvDetailsServ.setText(Html.fromHtml("<![CDATA[" + serviceItem.getSerDescEn() + "]]>", Html.FROM_HTML_MODE_LEGACY).toString().replaceAll("[\\u202C\\u202A]", ""));
+            } else {
+
+                String spanned = Html.fromHtml("<![CDATA[" + serviceItem.getSerDescEn() + "]]>").toString().replaceAll("[\\u202C\\u202A]", "");
+                tvDetailsServ.setText(spanned);
+            }
             getSupportActionBar().setTitle(serviceItem.getSerTitleEn());
         } else {
-            webView.loadDataWithBaseURL("", serviceItem.getSerDescAr(), "text/html", "UTF-8", "");
+            //webView.loadDataWithBaseURL("", serviceItem.getSerDescAr(), "text/html", "UTF-8", "");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                tvDetailsServ.setText(Html.fromHtml(serviceItem.getSerDescAr(), Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                tvDetailsServ.setText(Html.fromHtml(serviceItem.getSerDescAr()));
+            }
             getSupportActionBar().setTitle(serviceItem.getSerTitleAr());
 
         }

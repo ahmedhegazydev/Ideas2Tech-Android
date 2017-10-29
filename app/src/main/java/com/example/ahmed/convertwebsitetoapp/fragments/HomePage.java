@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -39,10 +38,6 @@ import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import co.chatsdk.core.session.ChatSDK;
-import co.chatsdk.core.session.Configuration;
-import co.chatsdk.firebase.FirebaseModule;
-import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
 import co.chatsdk.ui.InterfaceManager;
 
 //import com.example.ahmed.convertwebsitetoapp.ActivityMain;
@@ -117,7 +112,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
                 Toast.makeText(context, "Fab clicked", Toast.LENGTH_SHORT).show();
             }
         });
-        initChatSdk();
+        //initChatSdk();
 
 
 //        listFragments.add(new FragmentContactsHotlist());
@@ -153,28 +148,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
     }
 
-    private void initChatSdk() {
-        //Enable multi-dexing
-        MultiDex.install(getActivity());
-        Context context = getActivity();
-        // Create a new configuration
-        Configuration.Builder builder = new Configuration.Builder(context);
-//        builder.firebase(getActivity().getResources().getString(R.string.firebase_url),
-//                getActivity().getResources().getString(R.string.firebase_root_path),
-//                getActivity().getResources().getString(R.string.firebase_storage_url),
-//                "CloudMessaging Api Key");
-        // Perform any configuration steps
-        // Initialize the Chat SDK
-        ChatSDK.initialize(builder.build());
-        // Activate the Firebase module
-        FirebaseModule.activate(context);
-        // File storage is needed for profile image upload and image messages
-        FirebaseFileStorageModule.activate();
-        // Activate any other modules you need.
-        // ...
 
-
-    }
 
 
     private void init() {
@@ -186,7 +160,6 @@ public class HomePage extends Fragment implements View.OnClickListener {
         tvOrderNow = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.ordernow);
         tvPrevOrders = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.prevOrders);
         tvAboutUs = (TextView) viewRoot.findViewById(R.id.sv).findViewById(R.id.llHomePage).findViewById(R.id.aboutUs);
-
 
         tvContactUs.setOnClickListener(this);
         tvOurProjects.setOnClickListener(this);
@@ -216,6 +189,9 @@ public class HomePage extends Fragment implements View.OnClickListener {
         }
 
         if (view.equals(tvServices)) {
+            // Set title bar
+            Toast.makeText(getActivity(), "Services", Toast.LENGTH_SHORT).show();
+            //getActivity().setTitle("Services");
             goToFragment(new Services());
             userSessionManager.postLastPressedFragment(MainActivity.TAG_SERVICES);
         }

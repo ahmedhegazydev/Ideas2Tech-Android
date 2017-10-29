@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,16 +31,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -71,6 +67,10 @@ public class FAQs extends Fragment {
         //getFags();
         fetchData(URLs.URL_FAQS);
 
+        ((com.example.ahmed.convertwebsitetoapp.chatting.MainActivity) getActivity())
+                .setActionBarTitle(getActivity().getResources().getString(R.string.nav_faqs));
+
+
         return viewRoot;
     }
 
@@ -79,6 +79,8 @@ public class FAQs extends Fragment {
 
         pdFetchingFaqs = new ProgressDialog(getContext());
         pdFetchingFaqs.setMessage("Fetching the FAQs .....");
+//        pdFetchingFaqs.setCancelable(false);
+//        pdFetchingFaqs.setCanceledOnTouchOutside(false);
         pdFetchingFaqs.setTitle("Please wait");
         pdFetchingFaqs.show();
 
@@ -304,7 +306,7 @@ public class FAQs extends Fragment {
             //Log.e("lan364", lan);
 
 
-            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")) {
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
                 tvQuestion.setText(faqItem.getQuestionEn());
                 tvAnswer.setText(faqItem.getAnswerEn());
             } else {

@@ -18,13 +18,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.ahmed.convertwebsitetoapp.DetailsActivtyProject;
+import com.example.ahmed.convertwebsitetoapp.R;
+import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
+import com.example.ahmed.convertwebsitetoapp.model.ProjectItem;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 //import com.example.ActivityLogin;
 //import com.example.ActivityMain;
@@ -40,27 +57,6 @@ import android.widget.Toast;
 //import com.example.handasy.view.CustomButton;
 //import com.squareup.picasso.Callback;
 //import com.squareup.picasso.Picasso;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.example.ahmed.convertwebsitetoapp.DetailsActivtyProject;
-import com.example.ahmed.convertwebsitetoapp.DetailsActivtyServ;
-import com.example.ahmed.convertwebsitetoapp.R;
-import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
-import com.example.ahmed.convertwebsitetoapp.model.ProjectItem;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 
 /**
@@ -79,8 +75,25 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
     ArrayList<ProjectItem> serviceItems = new ArrayList<ProjectItem>();
     ListAdapter listAdapter = null;
     ProgressDialog progressDialog = null;
-    private ArrayList<Fragment> listFragments = new ArrayList<Fragment>();
     FloatingActionButton fabChatting = null;
+    private ArrayList<Fragment> listFragments = new ArrayList<Fragment>();
+
+    public static void setAlphaAnimation(View v) {
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
+        fadeOut.setDuration(300);
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(v, "alpha", .3f, 1f);
+        fadeIn.setDuration(300);
+        final AnimatorSet mAnimationSet = new AnimatorSet();
+        mAnimationSet.play(fadeIn).after(fadeOut);
+        mAnimationSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mAnimationSet.start();
+            }
+        });
+        mAnimationSet.start();
+    }
 
     //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -96,9 +109,14 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Preparing");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         fetchData(URLs.URL_PROJECTS);
+
+        ((com.example.ahmed.convertwebsitetoapp.chatting.MainActivity) getActivity())
+                .setActionBarTitle(getActivity().getResources().getString(R.string.nav_our_projets));
 
         fabChatting = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
         //setAlphaAnimation(fabChatting);
@@ -143,25 +161,6 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
 
         return viewRoot;
     }
-
-
-    public static void setAlphaAnimation(View v) {
-        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(v, "alpha", 1f, .3f);
-        fadeOut.setDuration(300);
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(v, "alpha", .3f, 1f);
-        fadeIn.setDuration(300);
-        final AnimatorSet mAnimationSet = new AnimatorSet();
-        mAnimationSet.play(fadeIn).after(fadeOut);
-        mAnimationSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mAnimationSet.start();
-            }
-        });
-        mAnimationSet.start();
-    }
-
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -219,8 +218,9 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.e("error343412", e.getMessage());
+                            Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
                         }
 
 
@@ -296,15 +296,14 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
             ProjectItem serviceItem = getItem(i);
 
             View imageView = LayoutInflater.from(getActivity()).inflate(R.layout.project_item, null);
-            imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
+            //imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
             ImageView imageView1 = (ImageView) imageView.findViewById(R.id.iv);
             TextView textView = (TextView) imageView.findViewById(R.id.tvCategory);
 
 
-
-            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
                 textView.setText(serviceItem.getCategoryEn());
-            }else{
+            } else {
                 textView.setText(serviceItem.getCategoryAr());
             }
 
@@ -312,7 +311,8 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
 //            ImageView imageView = new ImageView(context);
 //            imageView.setLayoutParams(new LinearLayout.LayoutParams(200, 300));
 //            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(context).load(serviceItem.getProjectImgUrl()).into(imageView1);
+            //Glide.with(context).load(serviceItem.getProjectImgUrl()).into(imageView1);
+            Picasso.with(context).load(serviceItem.getProjectImgUrl()).into(imageView1);
 
             return imageView;
         }

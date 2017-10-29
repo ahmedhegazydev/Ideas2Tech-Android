@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ahmed.convertwebsitetoapp.model.ProjectItem;
-import com.example.ahmed.convertwebsitetoapp.model.ServiceItem;
 
 import java.util.Locale;
 
@@ -46,7 +45,7 @@ public class DetailsActivtyProject extends AppCompatActivity {
         tvCat = (TextView) findViewById(R.id.tvCategory);
 
         Glide.with(getApplicationContext()).load(serviceItem.getProjectImgUrl()).into(imageView);
-        if (Locale.getDefault().getLanguage() == "en"){
+        if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")) {
             textView.setText(serviceItem.getDescEn());
             getSupportActionBar().setTitle(serviceItem.getTitleEn());
             tvCat.setText(serviceItem.getCategoryEn());

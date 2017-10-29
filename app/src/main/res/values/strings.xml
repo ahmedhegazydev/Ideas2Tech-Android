@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/tools">
+<resources>
 
     <string-array name="titles">
         <item>Web Design</item>
@@ -26,6 +26,7 @@
     <string name="nav_home_page">Home Page</string>
     <string name="nav_faqs">FAQs</string>
     <string name="nav_sign_out">Sign Out</string>
+    <string name="nav_login">Login</string>
     <string name="login">Login</string>
 
     <string name="app_name">Ideas2Tech</string>

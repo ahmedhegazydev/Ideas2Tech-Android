@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -81,6 +80,14 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewRoot = inflater.inflate(R.layout.services, container, false);
+
+
+        getActivity().setTitle("Services");
+        ((com.example.ahmed.convertwebsitetoapp.chatting.MainActivity) getActivity())
+                .setActionBarTitle(getActivity().getResources().getString(R.string.nav_services));
+
+
+
         ///fab = (FloatingActionButton) viewRoot.findViewById(R.id.fabChatting);
         // setAlphaAnimation(fab);
 
@@ -272,7 +279,7 @@ public class Services extends Fragment implements ListView.OnItemClickListener {
             TextView tvImageTitle = (TextView) view1.findViewById(R.id.tvImageTitle);
 
 
-            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+            if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
                 tvImageTitle.setText(serviceItem.getSerTitleEn());
 
             }else{
