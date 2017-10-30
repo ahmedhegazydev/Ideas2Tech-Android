@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,14 +94,14 @@ public class FAQs extends Fragment {
 //                        Log.e("fagRes", response.toString());
 //                        Log.e("oooohh", modifyJson(response.toString()));
 
-                        faqItems.clear();
+                        //faqItems.clear();
                         pdFetchingFaqs.dismiss();
 
                         try {
                             @SuppressWarnings("unchecked")
                             JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            Log.e("res1313", jsonArray.toString());
+                            //Log.e("res1313", jsonArray.toString());
 //                            Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_SHORT).show();
 //                            int size = jsonArray.length();
 //                            ArrayList<JSONObject> arrays = new ArrayList<JSONObject>();
@@ -307,11 +307,11 @@ public class FAQs extends Fragment {
 
 
             if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
-                tvQuestion.setText(faqItem.getQuestionEn());
-                tvAnswer.setText(faqItem.getAnswerEn());
+                tvQuestion.setText(Html.fromHtml(faqItem.getQuestionEn()));
+                tvAnswer.setText(Html.fromHtml(faqItem.getAnswerEn()));
             } else {
-                tvQuestion.setText(faqItem.getQuestionAr());
-                tvAnswer.setText(faqItem.getAnswerAr());
+                tvQuestion.setText(Html.fromHtml(faqItem.getQuestionAr()));
+                tvAnswer.setText(Html.fromHtml(faqItem.getAnswerAr()));
             }
 
 

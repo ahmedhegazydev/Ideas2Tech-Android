@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nav_about_us">عن الشركه</string>
-    <string name="nav_contact_us">تواصل معنا</string>
+    <string name="nav_about_us">من نحن</string>
+    <string name="nav_contact_us">إتصل بنا</string>
     <string name="nav_home_page">الصفحه الرئيسيه</string>
-    <string name="nav_order_now">عايز مشروع</string>
+    <string name="nav_order_now">أطلب الان</string>
     <string name="nav_our_projets">مشاريعنا</string>
     <string name="nav_services">خدمات</string>
-    <string name="nav_prev_services">خدماتي</string>
-    <string name="nav_faqs">أساله وأجوبه</string>
+    <string name="nav_prev_services">خدماتي السابقه</string>
+    <string name="nav_faqs">الاسأله الشائعه</string>
     <string name="nav_sign_out">خروج</string>
     <string name="nav_login">تسجيل دخول</string>
 
@@ -18,10 +18,10 @@
         <item>مشاريعنا</item>
         <item>خدمات</item>
         <item></item>
-        <item>عايز مشروع</item>
-        <item>عن الشركه</item>
-        <item>تواصل معنا</item>
-        <item>أساله وأجوبه</item>
+        <item>أطلب الان</item>
+        <item>من نحن</item>
+        <item>إتصل بنا</item>
+        <item>الاسأله الشائعه</item>
         <item>خروج</item>
     </string-array>
 
@@ -29,10 +29,10 @@
         <item>الصفحه الرئيسيه</item>
         <item>مشاريعنا</item>
         <item>خدمات</item>
-        <item>عايز مشروع</item>
-        <item>عن الشركه</item>
+        <item>أطلب الان</item>
+        <item>من نحن</item>
         <item>تواصل معنا</item>
-        <item>أساله وأجوبه</item>
+        <item>الاسأله الشائعه</item>
         <item>خروج</item>
     </string-array>
 
@@ -335,6 +335,7 @@
 
 
     <string name="profile_saving_fail">Save failed</string>
+    <string name="retry">حاول مرة أخري</string>
 
 
 </resources>

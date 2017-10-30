@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ahmed.convertwebsitetoapp.PrevOrdersActivity;
 import com.example.ahmed.convertwebsitetoapp.R;
@@ -109,7 +108,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 //new SupportActivity.Builder().show(getActivity());
                 InterfaceManager.shared().a.startLoginActivity(getActivity(), true);
-                Toast.makeText(context, "Fab clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Fab clicked", Toast.LENGTH_SHORT).show();
             }
         });
         //initChatSdk();
@@ -190,7 +189,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
         if (view.equals(tvServices)) {
             // Set title bar
-            Toast.makeText(getActivity(), "Services", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Services", Toast.LENGTH_SHORT).show();
             //getActivity().setTitle("Services");
             goToFragment(new Services());
             userSessionManager.postLastPressedFragment(MainActivity.TAG_SERVICES);

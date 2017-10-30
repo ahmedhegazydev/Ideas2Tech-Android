@@ -29,10 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv"
         android:padding="10dp"
-        android:textColor="@android:color/black"
+        android:scrollbars="vertical"
         android:textSize="20sp"
-        android:textStyle="bold"
-
 
         />
 

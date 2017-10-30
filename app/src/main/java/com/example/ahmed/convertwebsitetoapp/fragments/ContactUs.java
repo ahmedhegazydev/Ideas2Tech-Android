@@ -30,6 +30,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -42,6 +43,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ahmed.convertwebsitetoapp.R;
 import com.example.ahmed.convertwebsitetoapp.RecordActivity;
 import com.example.ahmed.convertwebsitetoapp.chatting.URLs;
+import com.example.ahmed.convertwebsitetoapp.model.ContactUsItem;
 import com.example.ahmed.convertwebsitetoapp.sessions.UserSessionManager;
 import com.mancj.slideup.SlideUp;
 
@@ -85,6 +87,7 @@ public class ContactUs extends Fragment {
     String userId = "";
     FloatingActionButton fabChatting = null;
     View viewMain = null;
+    TextView tvMobile = null, tvEmail = null;
     private SlideUp slideUp;
 
     public final static boolean isValidEmail(CharSequence target) {
@@ -129,18 +132,20 @@ public class ContactUs extends Fragment {
         userId = new UserSessionManager(getActivity()).getUserDetails().get(UserSessionManager.KEY_USER_ID);
         if (TextUtils.isEmpty(userId)) {
             viewRoot = inflater.inflate(R.layout.contact_main_notloggedin, container, false);
-            Toast.makeText(context, "not logged in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "not logged in", Toast.LENGTH_SHORT).show();
             initFieldsNotLoggedIn();
         } else {
             viewRoot = inflater.inflate(R.layout.contact_main_loggedin, container, false);
             initFieldaLoggedIn();
-            Toast.makeText(context, "logged in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "logged in", Toast.LENGTH_SHORT).show();
 
         }
 
         init();
 
         //fetching the contact info from json into textviews
+        tvMobile = (TextView) viewRoot.findViewById(R.id.ll1).findViewById(R.id.llInfo).findViewById(R.id.tvMobile);
+        tvEmail = (TextView) viewRoot.findViewById(R.id.ll1).findViewById(R.id.llInfo).findViewById(R.id.tvEmail);
         getContactInfo(URLs.URL_CONTACT_INFO);
 
 
@@ -157,7 +162,26 @@ public class ContactUs extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("contactInfo20130074", response);
+                        //Log.e("contactInfo20130074", response);
+
+                        try {
+                            JSONObject jsonObject1 = new JSONObject(response.toString());
+                            JSONObject jsonObject11 = jsonObject1.getJSONObject("data");
+
+                            ContactUsItem contactUs = new ContactUsItem();
+                            contactUs.setAddressAr(jsonObject11.getString("address_ar"));
+                            contactUs.setAddressEn(jsonObject11.getString("address_en"));
+                            contactUs.setEmail(jsonObject11.getString("email"));
+                            contactUs.setMobile(jsonObject11.getString("mobile"));
+                            contactUs.setPhone(jsonObject11.getString("phone"));
+                            contactUs.setMap(jsonObject11.getString("map"));
+
+                            tvMobile.setText(contactUs.getMobile());
+                            tvEmail.setText(contactUs.getEmail());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
                     }
@@ -447,7 +471,7 @@ public class ContactUs extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        Log.e("res238135", response.toString());
+                        //Log.e("res238135", response.toString());
                         try {
                             JSONObject jsonObject = new JSONObject(response.toString());
                             String code = jsonObject.getString("code");

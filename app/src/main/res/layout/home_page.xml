@@ -33,7 +33,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="Services"
+                android:text="@string/nav_services"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="Our projects"
+                android:text="@string/nav_our_projets"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="Order Now +"
+                android:text="@string/nav_order_now"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -92,7 +92,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="My Prev Orders"
+                android:text="@string/nav_prev_services"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -113,7 +113,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="About Us"
+                android:text="@string/nav_about_us"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -135,7 +135,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="Contact Us"
+                android:text="@string/nav_contact_us"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -157,7 +157,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="FAQs"
+                android:text="@string/nav_faqs"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -179,13 +179,11 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="SignOut"
+                android:text="@string/nav_sign_out"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone"
-
-
                 />
 
         </LinearLayout>

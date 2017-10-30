@@ -125,12 +125,12 @@
 
 
         <LinearLayout
+            android:id="@+id/llInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/gray2"
             android:orientation="vertical"
-
             >
 
             <TextView
@@ -144,10 +144,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="ideas2techs@gmail.com2"
+                android:text="ideas2techs@gmail.com"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -155,6 +156,7 @@
                 />
 
             <TextView
+                android:id="@+id/tvMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

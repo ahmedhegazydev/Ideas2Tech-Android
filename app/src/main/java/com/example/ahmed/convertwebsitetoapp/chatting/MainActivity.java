@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(new Intent(MainActivity.this, ZopimChatActivity.class));
 
                 InterfaceManager.shared().a.startLoginActivity(MainActivity.this, true);
-                Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
 
                 //startChatting();
 
@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("socialMedia20130074", response);
+                        //Log.e("socialMedia20130074", response);
                         try {
                             JSONObject jsonObject1 = new JSONObject(response.toString());
                             JSONObject jsonObject11 = jsonObject1.getJSONObject("data");
@@ -857,11 +857,26 @@ public class MainActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
             getMenuInflater().inflate(R.menu.menu_social_media_not_logged, menu);
+            ///Toast.makeText(this, "Not Logged in", Toast.LENGTH_SHORT).show();
         } else {
             getMenuInflater().inflate(R.menu.menu_social_media_logged, menu);
+            //Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
+
+
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//
+//        if (TextUtils.isEmpty(new UserSessionManager(getApplicationContext()).getUserDetails().get(UserSessionManager.KEY_USER_ID))) {
+//            getMenuInflater().inflate(R.menu.menu_social_media_not_logged, menu);
+//        } else {
+//            getMenuInflater().inflate(R.menu.menu_social_media_logged, menu);
+//        }
+//        return super.onPrepareOptionsMenu(menu);
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

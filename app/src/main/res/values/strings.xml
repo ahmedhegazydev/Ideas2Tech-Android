@@ -24,7 +24,7 @@
     <string name="nav_our_projets">Our Projects</string>
     <string name="nav_about_us">About Us</string>
     <string name="nav_home_page">Home Page</string>
-    <string name="nav_faqs">FAQs</string>
+    <string name="nav_faqs">FAQ\'s</string>
     <string name="nav_sign_out">Sign Out</string>
     <string name="nav_login">Login</string>
     <string name="login">Login</string>
@@ -40,7 +40,7 @@
         <item>Order Now</item>
         <item>About Us</item>
         <item>Contact Us</item>
-        <item>FAQs</item>
+        <item>FAQ\'s</item>
         <item>SignOut</item>
     </string-array>
 
@@ -52,7 +52,7 @@
         <item>Order Now</item>
         <item>About Us</item>
         <item>Contact Us</item>
-        <item>FAQs</item>
+        <item>FAQ\'s</item>
         <item>SignOut</item>
     </string-array>
 
@@ -60,8 +60,7 @@
     <string name="CHATTING_CLIENT_ID">mobile_sdk_client_651b0d149b179b0694c5</string>
     <string name="CHATTING_APP_ID">277bf757e6b8dcc213d3633ff7f72a611ebfeab3a8b3095f</string>
     <string name="APP_ID">85CF9FF2-FA37-46DE-9A9F-7795232216DF</string>
-
-
+    <string name="retry">Retry again</string>
 
 
 </resources>

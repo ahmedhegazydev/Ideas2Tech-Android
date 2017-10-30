@@ -14,7 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,7 +191,7 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
                         serviceItems.clear();
                         try {
                             JSONObject jsonObject = new JSONObject(modifyJson(response.toString()));
-                            Log.e("res33423", jsonObject.toString());
+                            //Log.e("res33423", jsonObject.toString());
                             String image = jsonObject.getString("image");
                             String thumnail = jsonObject.getString("thumb");
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -219,7 +219,7 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
                         } catch (JSONException e) {
                             e.printStackTrace();
                             //Toast.makeText(getContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.e("error343412", e.getMessage());
+                            /// Log.e("error343412", e.getMessage());
                             Snackbar.make(/*getActivity().findViewById(R.id.regDrawerLayout)*/viewRoot, "Network Error !!!!", Snackbar.LENGTH_SHORT).show();
                         }
 
@@ -302,9 +302,9 @@ public class OurProjects extends Fragment implements ViewPager.OnPageChangeListe
 
 
             if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
-                textView.setText(serviceItem.getCategoryEn());
+                textView.setText(Html.fromHtml(serviceItem.getCategoryEn()));
             } else {
-                textView.setText(serviceItem.getCategoryAr());
+                textView.setText(Html.fromHtml(serviceItem.getCategoryAr()));
             }
 
 

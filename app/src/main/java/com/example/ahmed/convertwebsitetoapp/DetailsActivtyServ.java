@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -41,7 +43,7 @@ public class DetailsActivtyServ extends AppCompatActivity {
 //        String imageTitle = intent.getStringExtra("imgTitle");
 
         tvDetailsServ = (TextView) findViewById(R.id.tvDetailsServ);
-
+        tvDetailsServ.setMovementMethod(new ScrollingMovementMethod());
 
 //        ServiceItem serviceItem = getIntent().getParcelableExtra("item");
         ServiceItem serviceItem = (ServiceItem) getIntent().getSerializableExtra("item");
@@ -59,10 +61,11 @@ public class DetailsActivtyServ extends AppCompatActivity {
         if (Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English") || Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("en")) {
             //webView.loadDataWithBaseURL("", serviceItem.getSerDescEn(), "text/html", "UTF-8", "");
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                tvDetailsServ.setText(Html.fromHtml("<![CDATA[" + serviceItem.getSerDescEn() + "]]>", Html.FROM_HTML_MODE_LEGACY).toString().replaceAll("[\\u202C\\u202A]", ""));
+                tvDetailsServ.setText(Html.fromHtml(serviceItem.getSerDescEn(), Html.FROM_HTML_MODE_LEGACY)/*.toString().replaceAll("[\\u202C\\u202A]", "")*/);
             } else {
 
-                String spanned = Html.fromHtml("<![CDATA[" + serviceItem.getSerDescEn() + "]]>").toString().replaceAll("[\\u202C\\u202A]", "");
+                Spanned spanned = Html.fromHtml(serviceItem.getSerDescEn());
+                //String spanned = Html.fromHtml("<![CDATA[" + serviceItem.getSerDescEn() + "]]>").toString().replaceAll("[\\u202C\\u202A]", "");
                 tvDetailsServ.setText(spanned);
             }
             getSupportActionBar().setTitle(serviceItem.getSerTitleEn());

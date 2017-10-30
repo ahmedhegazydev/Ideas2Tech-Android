@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlMainOrderNow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rlMainOrderNow"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -63,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/warning"
+            android:drawablePadding="10dp"
             android:gravity="center_horizontal|right"
             android:padding="30dp"
             android:text="لا يوجد خطط للدفع الان\n يمكنك اضافه واحده عن طريه زر الاضافه العلوي "
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvDataNotExist"
             android:layout_centerInParent="true"
-            android:text="حاول تاني"
+            android:text="@string/retry"
             android:textColor="@color/logo"
             android:textStyle="bold"
 
